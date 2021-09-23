@@ -1,0 +1,2413 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:form="sap.ui.layout.form" xmlns:core="sap.ui.core"
+	class="sapUiSizeCompact" xmlns:f="sap.f" xmlns:grid="sap.ui.layout.cssgrid" xmlns:t="sap.ui.table" xmlns:u="sap.ui.unified">
+	<Panel visible="{=${selectedSectionDetailModel>/sectionName}==='Forms'?true:false}" backgroundDesign="Transparent"
+		class="mainPanelClassForm">
+		<f:GridList id="gridListForm" items="{ path: 'data>/POPForm' }" class="sapUiSizeCompact">
+			<f:GridListItem class="gridHeightBidForm" type="Active" press="onGidItemPress">
+				<VBox class="sapUiSmallMargin">
+					<layoutData>
+						<FlexItemData growFactor="1" shrinkFactor="0"/>
+					</layoutData>
+					<Label text="{data>value}" wrapping="true" class="sapUiTinyMarginBottom LabelGridBid"/>
+				</VBox>
+			</f:GridListItem>
+		</f:GridList>
+		<Panel visible="{=${selectedDashboard>/SelectedKey}==='form1' &amp;&amp; ${selectedSectionDetailModel>/mastertable}===false &amp;&amp; ${data>/POPForm/0/Access}==='F'}">
+			<form:SimpleForm id="POPForm" layout="ResponsiveLayout" class="sapUiSizeCompact" labelSpanL="5" labelSpanM="5" adjustLabelSpan="false"
+				emptySpanL="0" emptySpanM="0" columnsL="2" columnsM="2" singleContainerFullSize="false" binding="{POPFormModel>/POPFormData/0/}">
+				<form:toolbar>
+					<Toolbar>
+						<ToolbarSpacer/>
+						<Link press="onFormToTableLinkPress" text="Details" id="popFormLink"/>
+					</Toolbar>
+				</form:toolbar>
+				<form:content>
+					<VBox>
+						<HBox justifyContent="Center">
+							<HBox class="contentMargin ">
+								<Label text="Project Name" class="sapUiTinyMarginTop" width="9rem"/>
+								<Input type="Text" value="{POPFormModel>ProjectName}" width="16.6rem" maxLength="200" liveChange="onChange" id="popfield1"
+									fieldGroupIds="myInputs" class="formfield"/>
+							</HBox>
+							<HBox class="contentMargin sapUiMediumMarginBegin">
+								<Label text="Business Domain" class="sapUiTinyMarginTop" width="9rem"/>
+								<ComboBox
+									items="{path:'TATA_BD>/dataModel',length:10000,filters: [{ path: 'TYPE', operator: 'EQ', value1: 'P' },{ path: 'Locked', operator: 'EQ', value1: 'N' }], sorter: { path: 'BDNAME' }}"
+									width="16.6rem" selectedKey="{POPFormModel>BDID}" id="popformBD" change="onBDCSChange" fieldGroupIds="myInputs" class="formfield">
+									<items>
+										<core:Item key="{TATA_BD>BDID}" text="{TATA_BD>BDNAME}"/>
+									</items>
+								</ComboBox>
+							</HBox>
+						</HBox>
+						<HBox justifyContent="Center">
+							<HBox class="contentMargin">
+								<Label text="Vertical Head" class="sapUiTinyMarginTop" width="9rem"/>
+								<ComboBox
+									items="{path:'TATA_BD>/dataModel',length:10000,filters: [{ path: 'TYPE', operator: 'EQ', value1: 'P' },{ path: 'Locked', operator: 'EQ', value1: 'N' }], sorter: { path: 'BDDESC' }}"
+									width="16.6rem" selectedKey="{POPFormModel>PGDName}" id="popformPGD" change="onBDCSChange" fieldGroupIds="myInputs" class="formfield"
+									enabled="false" editable="false">
+									<items>
+										<core:Item key="{TATA_BD>BDID}" text="{TATA_BD>BDDESC}"/>
+									</items>
+								</ComboBox>
+							</HBox>
+							<HBox class="contentMargin sapUiMediumMarginBegin">
+								<Label text="Business Sub Domain" class="sapUiTinyMarginTop" width="9rem"/>
+								<ComboBox
+									items="{path:'TATA_BSD>/dataModel',length:10000,filters: [{ path: 'Locked', operator: 'EQ', value1: 'N' }], sorter: { path: 'BSDNAME' }}"
+									width="16.6rem" selectedKey="{POPFormModel>BSDID}" id="popformBSD" enabled="false" fieldGroupIds="myInputs" class="formfield">
+									<items>
+										<core:Item key="{TATA_BSD>BSDID}" text="{TATA_BSD>BSDNAME}"/>
+									</items>
+								</ComboBox>
+							</HBox>
+						</HBox>
+						<HBox justifyContent="Center">
+							<HBox class="contentMargin">
+								<Label text="Customer Segment" class="sapUiTinyMarginTop" width="9rem"/>
+								<ComboBox
+									items="{path:'TATA_CUSTSEG>/dataModel',length:10000,filters: [{ path: 'Locked', operator: 'EQ', value1: 'N' }], sorter: { path: 'CUSTSEGNAME' }}"
+									width="16.6rem" selectedKey="{POPFormModel>CUSTSEGID}" id="popformCS" fieldGroupIds="myInputs" change="onBDCSChange" class="formfield">
+									<items>
+										<core:Item key="{TATA_CUSTSEG>CUSTSEGID}" text="{TATA_CUSTSEG>CUSTSEGNAME}"/>
+									</items>
+								</ComboBox>
+							</HBox>
+							<HBox class="contentMargin sapUiMediumMarginBegin">
+								<Label text="Stage of Deal" class="sapUiTinyMarginTop" width="9rem"/>
+								<ComboBox
+									items="{path:'TATA_MoD>/dataModel',length:10000,filters: [{ path: 'Locked', operator: 'EQ', value1: 'N' }], sorter: { path: 'ModNAME' }}"
+									width="16.6rem" selectedKey="{POPFormModel>SatgeDealID}" id="popformSOD" fieldGroupIds="myInputs" enabled="false" class="formfield">
+									<items>
+										<core:Item key="{TATA_MoD>MoDID}" text="{TATA_MoD>ModNAME}"/>
+									</items>
+								</ComboBox>
+							</HBox>
+						</HBox>
+						<HBox justifyContent="Center">
+							<HBox class="contentMargin">
+								<Label text="User" class="sapUiTinyMarginTop" width="9rem"/>
+								<Input type="Text" value="{POPFormModel>P_User}" width="16.6rem" liveChange="onChange" id="popfield6" maxLength="200"
+									fieldGroupIds="myInputs" class="formfield"/>
+							</HBox>
+							<HBox class="contentMargin sapUiMediumMarginBegin">
+								<Label text="Primary Customer" class="sapUiTinyMarginTop" width="9rem"/>
+								<Input type="Text" value="{POPFormModel>DescriptiveStatus}" width="16.6rem" liveChange="onChange" id="popfield5" maxLength="200"
+									fieldGroupIds="myInputs" class="formfield"/>
+							</HBox>
+						</HBox>
+						<HBox justifyContent="Center">
+							<HBox class="contentMargin">
+								<Label text="Competitive Position" class="sapUiTinyMarginTop" width="9rem"/>
+								<ComboBox items="{path:'TATA_P_Win>/dataModel',length:10000, sorter: { path: 'P_WinNAME' }}" width="16.6rem"
+									selectedKey="{POPFormModel>CompetitivePosition}" id="popformCP" fieldGroupIds="myInputs" class="formfield">
+									<items>
+										<core:Item key="{TATA_P_Win>P_WinID}" text="{TATA_P_Win>P_WinNAME}"/>
+									</items>
+								</ComboBox>
+							</HBox>
+							<HBox class="contentMargin sapUiMediumMarginBegin">
+								<Label text="Description/Action Required/Key Risks" class="sapUiTinyMarginTop" width="9rem" wrapping="true"/>
+								<Input value="{POPFormModel>KeyRisks}" width="16.6rem" maxLength="200" change="onChange" id="popfield2" fieldGroupIds="myInputs"
+									class="formfield"/>
+							</HBox>
+						</HBox>
+						<HBox justifyContent="Center">
+							<HBox class="contentMargin">
+								<Label text="RFP/Enquiry Release Date" class="sapUiTinyMarginTop" width="9rem" wrapping="true"/>
+								<DatePicker dateValue="{POPFormModel>RFPreleaseYR}" displayFormat="dd-MM-YYYY" change="onChange" width="16.6rem" fieldGroupIds="myInputs"
+									id="popformRFP" class="formfield"/>
+								<!--<ComboBox items="{path:'TATA_FY>/dataModel',length:10000}" width="16.6rem" selectedKey="{POPFormModel>RFPreleaseYR}" id="popformRFP"
+									fieldGroupIds="myInputs">
+									<items>
+										<core:Item key="{TATA_FY>FYID}" text="{TATA_FY>FYID}"/>
+									</items>
+								</ComboBox>-->
+							</HBox>
+							<HBox class="contentMargin sapUiMediumMarginBegin">
+								<Label text="Contract Sign Date" class="sapUiTinyMarginTop" width="9rem"/>
+								<DatePicker dateValue="{POPFormModel>ContractSignYR}" displayFormat="dd-MM-YYYY" change="onChange" width="16.6rem" fieldGroupIds="myInputs"
+									id="popformCSY" class="formfield"/>
+								<!--<ComboBox items="{path:'TATA_FY>/dataModel',length:10000}" width="16.6rem" selectedKey="{POPFormModel>ContractSignYR}" id="popformCSY"
+									fieldGroupIds="myInputs">
+									<items>
+										<core:Item key="{TATA_FY>FYID}" text="{TATA_FY>FYID}"/>
+									</items>
+								</ComboBox>-->
+							</HBox>
+						</HBox>
+						<HBox justifyContent="Center">
+							<HBox class="contentMargin">
+								<Label text="Total Program Value" class="sapUiTinyMarginTop" width="9rem"/>
+								<Input type="Number" value="{POPFormModel>TotaProgramValue}" width="16.6rem" liveChange="onChange" id="popfield3" fieldGroupIds="myInputs"
+									class="formfield"/>
+							</HBox>
+							<HBox class="contentMargin sapUiMediumMarginBegin">
+								<Label text="TATA Power SED Share" class="sapUiTinyMarginTop" width="9rem" wrapping="true"/>
+								<Input type="Number" value="{POPFormModel>TataPowerSEDShare}" width="16.6rem" liveChange="onChange" id="popfield4" fieldGroupIds="myInputs"
+									class="formfield"/>
+							</HBox>
+						</HBox>
+						<HBox justifyContent="Center">
+							<HBox class="contentMargin">
+								<Label text="Category" class="sapUiTinyMarginTop" width="9rem"/>
+								<ComboBox width="16.6rem" selectedKey="{POPFormModel>P_Category}" id="popformCAT" fieldGroupIds="myInputs" class="formfield">
+									<items>
+										<core:Item key="Adjacent" text="Adjacent"/>
+										<core:Item key="Core" text="Core"/>
+										<core:Item key="Exploit" text="Exploit"/>
+										<core:Item key="New" text="New"/>
+									</items>
+								</ComboBox>
+							</HBox>
+							<HBox class="contentMargin sapUiMediumMarginBegin">
+								<Label text="OverAll Status" class="sapUiTinyMarginTop" width="9rem"/>
+								<ComboBox width="16.6rem" selectedKey="{POPFormModel>OverallStatus}" id="popformOS" fieldGroupIds="myInputs" class="formfield">
+									<items>
+										<core:Item key="Open" text="Open"/>
+										<core:Item key="Close" text="Close"/>
+									</items>
+								</ComboBox>
+							</HBox>
+						</HBox>
+						<HBox justifyContent="Center">
+							<HBox class="contentMargin">
+								<Label text="TATA Partners" class="sapUiTinyMarginTop" width="9rem"/>
+								<MultiComboBox selectionChange="handleSelectionChange" selectionFinish="handleSelectionFinish" width="16.6rem" class="formfield"
+									items="{path:'TATA_Partners>/dataModel',length:10000,filters: [{ path: 'Locked', operator: 'EQ', value1: 'N' }], sorter: { path: 'PartnersName' }}"
+									id="multicombo1" change="onChange" fieldGroupIds="myInputs">
+									<core:Item key="{TATA_Partners>PartnersID}" text="{TATA_Partners>PartnersName}"/>
+								</MultiComboBox>
+							</HBox>
+							<HBox class="contentMargin sapUiMediumMarginBegin">
+								<Label text="TATA Competitors" class="sapUiTinyMarginTop" width="9rem"/>
+								<MultiComboBox selectionChange="handleSelectionChange" selectionFinish="handleSelectionFinish" width="16.6rem" class="formfield"
+									items="{path:'TATA_Competitors>/dataModel',length:10000,filters: [{ path: 'Locked', operator: 'EQ', value1: 'N' }], sorter: { path: 'CompetName' }}"
+									id="multicombo2" change="onChange" fieldGroupIds="myInputs">
+									<core:Item key="{TATA_Competitors>CompetID}" text="{TATA_Competitors>CompetName}"/>
+								</MultiComboBox>
+							</HBox>
+						</HBox>
+					</VBox>
+				</form:content>
+			</form:SimpleForm>
+		</Panel>
+		<Panel visible="{=${selectedDashboard>/SelectedKey}==='form1' &amp;&amp; ${selectedSectionDetailModel>/mastertable}===true &amp;&amp; ${data>/POPForm/0/Access}==='F'}">
+			<t:Table id="popformtable" selectionMode="Single" selectionBehavior="RowOnly" alternateRowColors="true" rows="{formTableModel>/poptable}"
+				rowHeight="25" visibleRowCount="16" enableCellFilter="true" filter="filterPrice" ariaLabelledBy="title" class="uiTable formTable"
+				rowSelectionChange="onRowSelected">
+				<t:extension>
+					<OverflowToolbar>
+						<ToolbarSpacer/>
+						<Link text="Back" press="onBackToForm" class="sapUiSmallMarginTop sapUiTinyMarginEnd"/>
+						<ImageContent src="sap-icon://excel-attachment" press="onExport" tooltip="Download" class="sapUiSmallMarginBottom uitableIC"/>
+						<ImageContent src="sap-icon://sorting-ranking" tooltip="clear sorting" press="clearSorting" class="sapUiSmallMarginBottom uitableIC"/>
+						<ImageContent src="sap-icon://clear-filter" tooltip="clear filter" press="clearFilters" class="sapUiSmallMarginBottom uitableIC"/>
+					</OverflowToolbar>
+				</t:extension>
+				<t:columns>
+					<t:Column width="9rem" filterProperty="BDNAME" sortProperty="BDNAME" hAlign="Center">
+						<Label text="Domain" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{formTableModel>BDNAME}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="9rem" filterProperty="BSDNAME" sortProperty="BSDNAME" hAlign="Center">
+						<Label text="Sub Domain" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{formTableModel>BSDNAME}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="11rem" filterProperty="ProjectName" sortProperty="ProjectName" hAlign="Center">
+						<Label text="Project Name" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{formTableModel>ProjectName}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="11rem" filterProperty="BDDESC" sortProperty="BDDESC" hAlign="Center">
+						<Label text="Vertical Head" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{formTableModel>PGDNAME}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="11rem" filterProperty="CompetitivePositionName" sortProperty="CompetitivePositionName" hAlign="Center">
+						<Label text="Competitive Position" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{formTableModel>CompetitivePositionName}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="9rem" hAlign="Center">
+						<Label text="Contract Sign Date" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{path:'formTableModel>ContractSignYR',formatter:'.handleSearchDate'}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="9rem" hAlign="Center">
+						<Label text="RFP Release Date" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{path:'formTableModel>RFPreleaseYR',formatter:'.handleSearchDate'}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="9rem" filterProperty="CUSTSEGNAME" sortProperty="CUSTSEGNAME" hAlign="Center">
+						<Label text="Customer Segment" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{formTableModel>CUSTSEGNAME}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="9rem" filterProperty="DescriptiveStatus" sortProperty="DescriptiveStatus" hAlign="Center">
+						<Label text="Primary Customer" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{formTableModel>DescriptiveStatus}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="9rem" filterProperty="KeyRisks" sortProperty="KeyRisks" hAlign="Center">
+						<Label text="Description / Key Risks" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{formTableModel>KeyRisks}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="9rem" filterProperty="OverallStatus" sortProperty="OverallStatus" hAlign="Center">
+						<Label text="Overall Status" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{formTableModel>OverallStatus}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="9rem" filterProperty="P_Category" sortProperty="P_Category" hAlign="Center">
+						<Label text="Category" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{formTableModel>P_Category}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="9rem" filterProperty="P_ConvCategory" sortProperty="P_ConvCategory" hAlign="Center">
+						<Label text="Probability" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{formTableModel>P_ConvCategory}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="9rem" filterProperty="P_Go" sortProperty="P_Go" hAlign="Center">
+						<Label text="Stage Deal %" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{formTableModel>P_Go}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="10rem" filterProperty="SatgeDealName" sortProperty="SatgeDealName" hAlign="Center">
+						<Label text="Stage Deal" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{formTableModel>SatgeDealName}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="9rem" filterProperty="P_User" sortProperty="P_User" hAlign="Center">
+						<Label text="User" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{formTableModel>P_User}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="9rem" filterProperty="WeighOrderValue" sortProperty="WeighOrderValue" hAlign="Center">
+						<Label text="Weight Order Value" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{formTableModel>WeighOrderValue}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="9rem" hAlign="Center">
+						<Label text="Tata Power SED Share" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{formTableModel>TataPowerSEDShare}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="9rem" hAlign="Center">
+						<Label text="Total Program Value" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{formTableModel>TotaProgramValue}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="9rem" filterProperty="P_WinPER" sortProperty="P_WinPER" hAlign="Center">
+						<Label text="Win Percentage" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{formTableModel>P_WinPER}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="9rem" filterProperty="CreatedBy" sortProperty="CreatedBy" hAlign="Center">
+						<Label text="Created By" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{formTableModel>CreatedBy}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="9rem" hAlign="Center">
+						<Label text="Created Date" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{path:'formTableModel>CreateDate',formatter:'.handleSearchDate'}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="9rem" filterProperty="UpdatedBy" sortProperty="UpdatedBy" hAlign="Center">
+						<Label text="Updated By" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{formTableModel>UpdatedBy}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="9rem" hAlign="Center">
+						<Label text="Updated Date" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{path:'formTableModel>UpdateDate',formatter:'.handleSearchDate'}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+				</t:columns>
+			</t:Table>
+		</Panel>
+	</Panel>
+	<Panel visible="{=${selectedSectionDetailModel>/sectionName}==='Bid Forms'?true:false}" backgroundDesign="Transparent"
+		class="mainPanelClassFormBid">
+		<f:GridList id="gridListForm2" items="{ path: 'data>/BIDForms' }" class="sapUiSizeCompact">
+			<f:GridListItem class="gridHeightBidForm1" type="Active" press="onGidItemPress">
+				<VBox class="sapUiSmallMargin">
+					<layoutData>
+						<FlexItemData growFactor="1" shrinkFactor="0"/>
+					</layoutData>
+					<Label text="{data>value}" wrapping="true" class="sapUiTinyMarginBottom LabelGridBid"/>
+				</VBox>
+			</f:GridListItem>
+		</f:GridList>
+		<Panel visible="{=${selectedDashboard>/SelectedKey}==='form2' &amp;&amp; ${selectedSectionDetailModel>/mastertable}===false &amp;&amp; ${data>/BIDForms/0/Access}==='F'}">
+			<form:SimpleForm id="BIDMISForm" layout="ResponsiveLayout" class="sapUiSizeCompact" labelSpanL="5" labelSpanM="5" adjustLabelSpan="false"
+				emptySpanL="0" emptySpanM="0" columnsL="2" columnsM="2" singleContainerFullSize="false" binding="{BIDMISFormModel>/BIDMISFormData/0/}">
+				<form:toolbar>
+					<Toolbar>
+						<ToolbarSpacer/>
+						<Link press="onFormToTableLinkPress" text="Details" id="bidFormLink"/>
+						<!--<Link press="onViewMasterTbl" text="Details" id="bidFormLink"/>-->
+					</Toolbar>
+				</form:toolbar>
+				<form:content>
+					<VBox>
+						<HBox justifyContent="Center">
+							<HBox class="contentMargin ">
+								<Label text="Bid Name" class="sapUiTinyMarginTop" width="9rem"/>
+								<Input value="{BIDMISFormModel>BidName}" change="onChange" width="16.6rem" fieldGroupIds="myInputs" class="formfield" id="bidmisdtp1"/>
+							</HBox>
+							<HBox class="contentMargin sapUiMediumMarginBegin">
+								<Label text="Date of receipt in SED" class="sapUiTinyMarginTop" width="9rem"/>
+								<DatePicker dateValue="{BIDMISFormModel>DateReceSED}" displayFormat="dd-MM-YYYY" change="onChange" width="16.6rem" fieldGroupIds="myInputs"
+									id="bidmisdtp2" class="formfield"/>
+							</HBox>
+						</HBox>
+						<HBox justifyContent="Center">
+							<HBox class="contentMargin">
+								<Label text="Enquiry Ref. No." class="sapUiTinyMarginTop" width="9rem"/>
+								<Input value="{BIDMISFormModel>EnquiryRefNo}" change="onChange" width="16.6rem" fieldGroupIds="myInputs" class="formfield" id="bidmisdtp3"/>
+							</HBox>
+							<HBox class="contentMargin sapUiMediumMarginBegin">
+								<Label text="RFP Date" class="sapUiTinyMarginTop" width="9rem"/>
+								<DatePicker dateValue="{BIDMISFormModel>RFPDate}" displayFormat="dd-MM-YYYY" change="onChange" width="16.6rem" fieldGroupIds="myInputs"
+									id="bidmisdtp4" class="formfield"/>
+							</HBox>
+						</HBox>
+						<HBox justifyContent="Center">
+							<HBox class="contentMargin">
+								<Label text="Bid Submission Date as per RFP" wrapping="true" class="sapUiTinyMarginTop" width="9rem"/>
+								<DatePicker dateValue="{BIDMISFormModel>BidSubmDateRFP}" displayFormat="dd-MM-YYYY" change="onChange" width="16.6rem"
+									fieldGroupIds="myInputs" id="bidmisdtp5" class="formfield"/>
+							</HBox>
+							<HBox class="contentMargin sapUiMediumMarginBegin">
+								<Label text="Customer Segment" class="sapUiTinyMarginTop" width="9rem"/>
+								<ComboBox
+									items="{path:'TATA_CUSTSEG>/dataModel',length:10000,filters: [{ path: 'Locked', operator: 'EQ', value1: 'N' }], sorter: { path: 'CUSTSEGNAME' }}"
+									width="16.6rem" selectedKey="{BIDMISFormModel>CustSegment}" change="onChange" fieldGroupIds="myInputs" class="formfield" id="bidmisdtp6">
+									<items>
+										<core:Item key="{TATA_CUSTSEG>CUSTSEGID}" text="{TATA_CUSTSEG>CUSTSEGNAME}"/>
+									</items>
+								</ComboBox>
+							</HBox>
+						</HBox>
+						<HBox justifyContent="Center">
+							<HBox class="contentMargin">
+								<Label text="Business Domain" class="sapUiTinyMarginTop" width="9rem"/>
+								<ComboBox
+									items="{path:'TATA_BD>/dataModel',length:10000,filters: [{ path: 'TYPE', operator: 'EQ', value1: 'B' },{ path: 'Locked', operator: 'EQ', value1: 'N' }], sorter: { path: 'BDNAME' }}"
+									width="16.6rem" selectedKey="{BIDMISFormModel>BusinessDomain}" change="onChange" fieldGroupIds="myInputs" class="formfield" id="bidmisdtp7">
+									<items>
+										<core:Item key="{TATA_BD>BDID}" text="{TATA_BD>BDNAME}"/>
+									</items>
+								</ComboBox>
+							</HBox>
+							<HBox class="contentMargin sapUiMediumMarginBegin">
+								<Label text="Primary Customer" class="sapUiTinyMarginTop" width="9rem"/>
+								<Input value="{BIDMISFormModel>PrimaryCustomer}" width="16.6rem" fieldGroupIds="myInputs" class="formfield" id="bidmisdtp8"/>
+								<!--<ComboBox items="{path:'TATA_BIDMIS_CUSTOMER>/dataModel',length:10000, sorter: { path: 'CustomerName' }}" id="multicombo4"
+									selectedKey="{BIDMISFormModel>PartnersID}" change="onChange" width="16.6rem" fieldGroupIds="myInputs" class="formfield">
+									<items>
+										<core:Item key="{TATA_BIDMIS_CUSTOMER>ID}" text="{TATA_BIDMIS_CUSTOMER>CustomerName}"/>
+									</items>
+								</ComboBox>-->
+							</HBox>
+						</HBox>
+						<!--<HBox justifyContent="Center">
+							<HBox class="contentMargin">
+								<Label text="Bid Submission Period" class="sapUiTinyMarginTop" width="9rem"/>
+								<Input value="{BIDMISFormModel>BidSubmissionPeriod}" change="onChange" width="16.6rem" fieldGroupIds="myInputs" editable="false"
+									class="formfield"/>
+							</HBox>
+							<HBox class="contentMargin sapUiMediumMarginBegin">
+								<Label text="RFP Period"  class="sapUiTinyMarginTop" width="9rem"/>
+								<Input value="{BIDMISFormModel>RFPPeriod}" change="onChange" width="16.6rem" fieldGroupIds="myInputs" editable="false" class="formfield"/>
+							</HBox>
+						</HBox>-->
+						<HBox justifyContent="Center">
+							<HBox class="contentMargin">
+								<Label text="Go / No Go" class="sapUiTinyMarginTop" width="9rem"/>
+								<ComboBox selectedKey="{BIDMISFormModel>GO_NO}" change="onChange" width="16.6rem" fieldGroupIds="myInputs" class="formfield" id="bidmisdtp9">
+									<items>
+										<core:Item key="GO" text="GO"/>
+										<core:Item key="NO GO" text="NO GO"/>
+									</items>
+								</ComboBox>
+							</HBox>
+							<HBox class="contentMargin sapUiMediumMarginBegin">
+								<Label text="Proposal Ref. No." class="sapUiTinyMarginTop" width="9rem"/>
+								<Input value="{BIDMISFormModel>ProposalRefNo}" change="onChange" width="16.6rem" fieldGroupIds="myInputs" class="formfield" id="bidmisdtp10"/>
+							</HBox>
+						</HBox>
+						<HBox justifyContent="Center">
+							<HBox class="contentMargin">
+								<Label text="Actual Bid Submission Date" wrapping="true" class="sapUiTinyMarginTop" width="9rem"/>
+								<DatePicker dateValue="{BIDMISFormModel>BidSubmDateActual}" displayFormat="dd-MM-YYYY" change="onChange" width="16.6rem"
+									fieldGroupIds="myInputs" id="bidmisdtp11" class="formfield"/>
+							</HBox>
+							<HBox class="contentMargin sapUiMediumMarginBegin">
+								<Label text="Expected Bid Opening Date" wrapping="true" class="sapUiTinyMarginTop" width="9rem"/>
+								<DatePicker dateValue="{BIDMISFormModel>ExpectedOpenDate}" displayFormat="dd-MM-YYYY" change="onChange" width="16.6rem"
+									fieldGroupIds="myInputs" id="bidmisdtp12" class="formfield"/>
+							</HBox>
+						</HBox>
+						<HBox justifyContent="Center">
+							<HBox class="contentMargin">
+								<Label text="Indicative Bid Value(INR Cr)" wrapping="true" class="sapUiTinyMarginTop" width="9rem"/>
+								<Input value="{BIDMISFormModel>IndicativeBidValue}" type="Number" change="onChange" width="16.6rem" fieldGroupIds="myInputs"
+									class="formfield" id="bidmisdtp13"/>
+							</HBox>
+							<HBox class="contentMargin sapUiMediumMarginBegin">
+								<Label text="Bid Value(INR Cr)" class="sapUiTinyMarginTop" width="9rem"/>
+								<Input type="Number" value="{BIDMISFormModel>BidValue}" change="onChange" width="16.6rem" fieldGroupIds="myInputs" class="formfield"
+									id="bidmisdtp14"/>
+							</HBox>
+						</HBox>
+						<HBox justifyContent="Center">
+							<HBox class="contentMargin">
+								<Label text="Bid Type" class="sapUiTinyMarginTop" width="9rem"/>
+								<ComboBox items="{path:'TATA_BIDMIS_TYPE>/dataModel',length:10000, sorter: { path: 'BIDType' }}" selectedKey="{BIDMISFormModel>BIDTypeID}"
+									change="onChange" width="16.6rem" fieldGroupIds="myInputs" class="formfield" id="bidmisdtp15">
+									<items>
+										<core:Item key="{TATA_BIDMIS_TYPE>ID}" text="{TATA_BIDMIS_TYPE>BIDType}"/>
+									</items>
+								</ComboBox>
+							</HBox>
+							<HBox class="contentMargin sapUiMediumMarginBegin">
+								<Label text="Bid Valid up to" class="sapUiTinyMarginTop" width="9rem"/>
+								<DatePicker dateValue="{BIDMISFormModel>BidValid}" displayFormat="dd-MM-YYYY" change="change" width="16.6rem" fieldGroupIds="myInputs"
+									id="bidmisdtp16" class="formfield"/>
+							</HBox>
+						</HBox>
+						<HBox justifyContent="Center">
+							<HBox class="contentMargin">
+								<Label text="EMD/BG/DD Details" class="sapUiTinyMarginTop" width="9rem"/>
+								<Input value="{BIDMISFormModel>EMD_BG_DD_Details}" change="onChange" width="16.6rem" fieldGroupIds="myInputs" class="formfield"
+									id="bidmisdtp17"/>
+							</HBox>
+							<HBox class="contentMargin sapUiMediumMarginBegin">
+								<Label text="EMD/BG Value" class="sapUiTinyMarginTop" width="9rem"/>
+								<Input type="Number" value="{BIDMISFormModel>EMDBGValue}" change="onChange" width="16.6rem" fieldGroupIds="myInputs" class="formfield"
+									id="bidmisdtp18"/>
+							</HBox>
+						</HBox>
+						<HBox justifyContent="Center">
+							<HBox class="contentMargin">
+								<Label text="EMD/BG Validity Date" class="sapUiTinyMarginTop" width="9rem"/>
+								<DatePicker dateValue="{BIDMISFormModel>EMDBGValidity}" displayFormat="dd-MM-YYYY" change="onChange" width="16.6rem"
+									fieldGroupIds="myInputs" id="bidmisdtp19" class="formfield"/>
+							</HBox>
+							<HBox class="contentMargin sapUiMediumMarginBegin">
+								<Label text="Partner BG Details" class="sapUiTinyMarginTop" width="9rem"/>
+								<Input value="{BIDMISFormModel>PartnerBGDetails}" change="onChange" width="16.6rem" fieldGroupIds="myInputs" class="formfield"
+									id="bidmisdtp20"/>
+							</HBox>
+						</HBox>
+						<HBox justifyContent="Center">
+							<HBox class="contentMargin">
+								<Label text="Partner BG Value" class="sapUiTinyMarginTop" width="9rem"/>
+								<Input type="Number" value="{BIDMISFormModel>PartnerBGValue}" change="onChange" width="16.6rem" fieldGroupIds="myInputs" class="formfield"
+									id="bidmisdtp21"/>
+							</HBox>
+							<HBox class="contentMargin sapUiMediumMarginBegin">
+								<Label text="Partner BG Validity Date" wrapping="true" class="sapUiTinyMarginTop" width="9rem"/>
+								<DatePicker dateValue="{BIDMISFormModel>PartnerBGValidity}" displayFormat="dd-MM-YYYY" change="onChange" width="16.6rem"
+									fieldGroupIds="myInputs" id="bidmisdtp22" class="formfield"/>
+							</HBox>
+						</HBox>
+						<HBox justifyContent="Center">
+							<HBox class="contentMargin">
+								<Label text="Submitted From (Mum/Del/Blr) and SPOC name" wrapping="true" class="sapUiTinyMarginTop" width="9rem"/>
+								<ComboBox items="{path:'TATA_BID_Submitted>/dataModel',length:10000, sorter: { path: 'SubmittedFrom' }}" id="bidmisdtp23"
+									selectedKey="{BIDMISFormModel>SubmittedFrom}" change="onChange" width="16.6rem" fieldGroupIds="myInputs" class="formfield">
+									<items>
+										<core:Item key="{TATA_BID_Submitted>ID}" text="{TATA_BID_Submitted>SubmittedFrom}"/>
+									</items>
+								</ComboBox>
+							</HBox>
+							<HBox class="contentMargin sapUiMediumMarginBegin">
+								<Label text="Tender Type" class="sapUiTinyMarginTop" width="9rem"/>
+								<ComboBox items="{path:'TATA_TENDER_Type>/dataModel',length:10000, sorter: { path: 'TENDERType' }}" id="bidmisdtp24"
+									selectedKey="{BIDMISFormModel>SingleTender}" change="onChange" width="16.6rem" fieldGroupIds="myInputs" class="formfield">
+									<items>
+										<core:Item key="{TATA_TENDER_Type>ID}" text="{TATA_TENDER_Type>TENDERType}"/>
+									</items>
+								</ComboBox>
+							</HBox>
+						</HBox>
+						<HBox justifyContent="Center">
+							<HBox class="contentMargin">
+								<Label text="Estimated L1 Target Price" wrapping="true" class="sapUiTinyMarginTop" width="9rem"/>
+								<Input value="{BIDMISFormModel>EstiL1TargetPrice}" type="Number" change="onChange" width="16.6rem" fieldGroupIds="myInputs"
+									class="formfield" id="bidmisdtp25"/>
+							</HBox>
+							<HBox class="contentMargin sapUiMediumMarginBegin">
+								<Label text="Target Price Met" class="sapUiTinyMarginTop" width="9rem"/>
+								<ComboBox selectedKey="{BIDMISFormModel>TargetPriceMet}" id='bidmisdtp26' change="onChange" width="16.6rem" fieldGroupIds="myInputs"
+									class="formfield">
+									<items>
+										<core:Item key="YES" text="YES"/>
+										<core:Item key="NO" text="NO"/>
+									</items>
+								</ComboBox>
+							</HBox>
+						</HBox>
+						<HBox justifyContent="Center">
+							<HBox class="contentMargin">
+								<Label text="Bid Status" class="sapUiTinyMarginTop" width="9rem"/>
+								<ComboBox items="{path:'TATA_BIDMIS_STATUS>/dataModel',length:10000, sorter: { path: 'BIDSTATUS' }}" id='bidmisdtp27'
+									selectedKey="{BIDMISFormModel>BidStatus}" change="onChange" width="16.6rem" fieldGroupIds="myInputs" class="formfield">
+									<items>
+										<core:Item key="{TATA_BIDMIS_STATUS>ID}" text="{TATA_BIDMIS_STATUS>BIDSTATUS}"/>
+									</items>
+								</ComboBox>
+							</HBox>
+							<HBox class="contentMargin sapUiMediumMarginBegin">
+								<Label text="Winning Probability" class="sapUiTinyMarginTop" wrapping="true" width="9rem"/>
+								<ComboBox selectedKey="{BIDMISFormModel>WinProbability}" change="onChange" width="16.6rem" fieldGroupIds="myInputs" class="formfield"
+									id='bidmisdtp28'>
+									<items>
+										<core:Item key="LOW" text="Low"/>
+										<core:Item key="MEDIUM" text="Medium"/>
+										<core:Item key="HIGH" text="High"/>
+									</items>
+								</ComboBox>
+							</HBox>
+						</HBox>
+						<HBox justifyContent="Center">
+							<HBox class="contentMargin">
+								<Label text="Gross Contribution Margin(%)" class="sapUiTinyMarginTop" wrapping="true" width="9rem"/>
+								<Input type="Number" value="{BIDMISFormModel>GrossContriMargin}" change="onChange" width="16.6rem" fieldGroupIds="myInputs"
+									class="formfield" id='bidmisdtp29'/>
+							</HBox>
+							<HBox class="contentMargin sapUiMediumMarginBegin">
+								<Label text="EBIDTA Margin(%)" class="sapUiTinyMarginTop" width="9rem"/>
+								<Input type="Number" value="{BIDMISFormModel>EBIDTAMargin}" change="onChange" width="16.6rem" fieldGroupIds="myInputs" class="formfield"
+									id='bidmisdtp30'/>
+							</HBox>
+						</HBox>
+						<HBox justifyContent="Center">
+							<HBox class="contentMargin">
+								<Label text="Cash PBT Margin(%)" class="sapUiTinyMarginTop" width="9rem"/>
+								<Input type="Number" value="{BIDMISFormModel>CashPBTMargin}" change="onChange" width="16.6rem" fieldGroupIds="myInputs" class="formfield"
+									id='bidmisdtp31'/>
+							</HBox>
+							<HBox class="contentMargin sapUiMediumMarginBegin">
+								<Label text="Purchase Order/ Contract No." wrapping="true" class="sapUiTinyMarginTop" width="9rem"/>
+								<Input value="{BIDMISFormModel>PONo}" change="onChange" width="16.6rem" fieldGroupIds="myInputs" class="formfield" id='bidmisdtp32'/>
+							</HBox>
+						</HBox>
+						<HBox justifyContent="Center">
+							<HBox class="contentMargin">
+								<Label text="Purchase Order/ Contract Date." wrapping="true" class="sapUiTinyMarginTop" width="9rem"/>
+								<DatePicker dateValue="{BIDMISFormModel>PODate}" displayFormat="dd-MM-YYYY" change="onChange" width="16.6rem" fieldGroupIds="myInputs"
+									id="bidmisdtp33" class="formfield"/>
+							</HBox>
+							<HBox class="contentMargin sapUiMediumMarginBegin">
+								<Label text="Purchase Order/Contract Value(INR Cr)" wrapping="true" class="sapUiTinyMarginTop" width="9rem"/>
+								<Input type="Number" value="{BIDMISFormModel>POValue}" change="onChange" width="16.6rem" fieldGroupIds="myInputs" class="formfield"
+									id='bidmisdtp34'/>
+							</HBox>
+						</HBox>
+						<HBox justifyContent="Center">
+							<HBox class="contentMargin">
+								<Label text="Budget to PM release date" wrapping="true" class="sapUiTinyMarginTop" width="9rem"/>
+								<DatePicker dateValue="{BIDMISFormModel>BudgetPMReleaseDate}" displayFormat="dd-MM-YYYY" change="onChange" width="16.6rem"
+									fieldGroupIds="myInputs" id="bidmisdtp35" class="formfield"/>
+							</HBox>
+							<HBox class="contentMargin sapUiMediumMarginBegin">
+								<Label text="Actual Bid Opening Date" class="sapUiTinyMarginTop" width="9rem" wrapping="true"/>
+								<DatePicker dateValue="{BIDMISFormModel>BidOpenDate}" displayFormat="dd-MM-YYYY" change="onChange" width="16.6rem" fieldGroupIds="myInputs"
+									id="bidmisdtp36" class="formfield"/>
+							</HBox>
+						</HBox>
+						<HBox justifyContent="Center">
+							<HBox class="contentMargin">
+								<Label text="L2 Price for Won Bids(INR Cr)" wrapping="true" class="sapUiTinyMarginTop" width="9rem"/>
+								<Input type="Number" value="{BIDMISFormModel>L2PriceWonBidsLakhs2}" change="onChange" width="16.6rem" fieldGroupIds="myInputs"
+									class="formfield" id='bidmisdtp37'/>
+							</HBox>
+							<HBox class="contentMargin sapUiMediumMarginBegin">
+								<Label text="L1 Price for Lost Bids(INR Cr)" wrapping="true" class="sapUiTinyMarginTop" width="9rem"/>
+								<Input type="Number" value="{BIDMISFormModel>L1PriceLostBidsLakhs}" change="onChange" width="16.6rem" fieldGroupIds="myInputs"
+									class="formfield" id='bidmisdtp38'/>
+							</HBox>
+						</HBox>
+						<HBox justifyContent="Center">
+							<HBox class="contentMargin">
+								<Label text="Lost due to" class="sapUiTinyMarginTop" width="9rem"/>
+								<ComboBox items="{path:'TATA_LOST_DUETO>/dataModel',length:10000, sorter: { path: 'LOST' }}" selectedKey="{BIDMISFormModel>Lostdueto}"
+									change="onChange" width="16.6rem" fieldGroupIds="myInputs" class="formfield" id='bidmisdtp39'>
+									<items>
+										<core:Item key="{TATA_LOST_DUETO>ID}" text="{TATA_LOST_DUETO>LOST}"/>
+									</items>
+								</ComboBox>
+							</HBox>
+							<HBox class="contentMargin sapUiMediumMarginBegin">
+								<Label text="Material Cost(INR Cr)" class="sapUiTinyMarginTop" width="9rem"/>
+								<Input type="Number" value="{BIDMISFormModel>MaterialCostCr}" change="onChange" width="16.6rem" fieldGroupIds="myInputs" class="formfield"
+									id='bidmisdtp40'/>
+							</HBox>
+							<!--	<HBox class="contentMargin sapUiMediumMarginBegin">
+								<Label text="Bid Submission Period" class="sapUiTinyMarginTop" width="9rem"/>
+								<ComboBox items="{TATA_BIDSBP>/dataModel}" selectedKey="{BIDMISFormModel>BidSubmissionPeriod}" change="onChange" width="16.6rem"  fieldGroupIds="myInputs">
+									<items>
+										<core:Item key="{TATA_BIDSBP>BidSubmissionPeriod}" text="{TATA_BIDSBP>BidSubmissionPeriod}"/>
+									</items>
+								</ComboBox>
+							</HBox>-->
+						</HBox>
+						<HBox justifyContent="Center">
+							<HBox class="contentMargin ">
+								<Label text="Manpower Cost(INR Cr)" class="sapUiTinyMarginTop" width="9rem" wrapping="true"/>
+								<Input type="Number" value="{BIDMISFormModel>ManpoweCostCr}" change="onChange" width="16.6rem" fieldGroupIds="myInputs" class="formfield"
+									id='bidmisdtp41'/>
+							</HBox>
+							<HBox class="contentMargin sapUiMediumMarginBegin">
+								<Label text="Travel Accomodation and Miscellaneous Cost(INR Cr)" wrapping="true" class="sapUiTinyMarginTop" width="9rem"/>
+								<Input type="Number" value="{BIDMISFormModel>MissCostCr}" change="onChange" width="16.6rem" fieldGroupIds="myInputs" class="formfield"
+									id='bidmisdtp42'/>
+							</HBox>
+						</HBox>
+						<HBox justifyContent="Center">
+							<HBox class="contentMargin">
+								<Label text="Overhead Cost(INR Cr)" class="sapUiTinyMarginTop" width="9rem"/>
+								<Input type="Number" value="{BIDMISFormModel>OverheadCostCr}" change="onChange" width="16.6rem" fieldGroupIds="myInputs" class="formfield"
+									id='bidmisdtp43'/>
+							</HBox>
+							<HBox class="contentMargin sapUiMediumMarginBegin">
+								<Label text="Interest Cost(INR Cr)" class="sapUiTinyMarginTop" width="9rem"/>
+								<Input type="Number" value="{BIDMISFormModel>InterestCostCr}" change="onChange" width="16.6rem" fieldGroupIds="myInputs" class="formfield"
+									id='bidmisdtp44'/>
+							</HBox>
+						</HBox>
+						<HBox justifyContent="Center">
+							<HBox class="contentMargin">
+								<Label text="Risk Factors(LD) Cost(INR Cr)" wrapping="true" class="sapUiTinyMarginTop" width="9rem"/>
+								<Input type="Number" value="{BIDMISFormModel>RiskFactCostCr}" change="onChange" width="16.6rem" fieldGroupIds="myInputs" class="formfield"
+									id='bidmisdtp45'/>
+							</HBox>
+							<HBox class="contentMargin sapUiMediumMarginBegin">
+								<Label text="Risk on FE Variation Cost(INR Cr)" wrapping="true" class="sapUiTinyMarginTop" width="9rem"/>
+								<Input type="Number" value="{BIDMISFormModel>RiskFEVarCostCr}" change="onChange" width="16.6rem" fieldGroupIds="myInputs" class="formfield"
+									id='bidmisdtp46'/>
+							</HBox>
+						</HBox>
+						<HBox justifyContent="Center">
+							<HBox class="contentMargin">
+								<Label text="Profit Margin(INR Cr)" class="sapUiTinyMarginTop" width="9rem"/>
+								<Input type="Number" value="{BIDMISFormModel>ProfitMarginCr}" change="onChange" width="16.6rem" fieldGroupIds="myInputs" class="formfield"
+									id='bidmisdtp47'/>
+							</HBox>
+							<HBox class="contentMargin sapUiMediumMarginBegin">
+								<Label text="Negotiation Margin(INR Cr)" wrapping="true" class="sapUiTinyMarginTop" width="9rem"/>
+								<Input type="Number" value="{BIDMISFormModel>NegotMarginCr}" change="onChange" width="16.6rem" fieldGroupIds="myInputs" class="formfield"
+									id='bidmisdtp48'/>
+							</HBox>
+						</HBox>
+						<HBox justifyContent="Center">
+							<HBox class="contentMargin">
+								<Label text="Other Bidders and Their Bid Price" class="sapUiTinyMarginTop" width="9rem" wrapping="true"/>
+								<!--	<MultiComboBox selectionChange="handleSelectionChange" selectionFinish="handleSelectionFinish" width="16.6rem" class="formfield"
+									items="{path:'TATA_Partners>/dataModel',length:10000}" id="multicombo3" change="onChange" fieldGroupIds="myInputs">
+									<core:Item key="{TATA_Partners>PartnersID}" text="{TATA_Partners>PartnersName}"/>
+								</MultiComboBox>-->
+								<Input value="{BIDMISFormModel>OtherBidder}" change="onChange" width="16.6rem" fieldGroupIds="myInputs" class="formfield" id='bidmisdtp49'/>
+							</HBox>
+							<HBox class="contentMargin sapUiMediumMarginBegin">
+								<Label text="Remarks" class="sapUiTinyMarginTop" width="9rem" wrapping="true"/>
+								<Input value="{BIDMISFormModel>Remarks}" change="onChange" width="16.6rem" fieldGroupIds="myInputs" class="formfield" id='bidmisdtp50'/>
+							</HBox>
+						</HBox>
+						<!--<HBox justifyContent="Center">
+							<HBox class="contentMargin">
+								<Label text="Bid Status (Cleaned)" class="sapUiTinyMarginTop" width="9rem" wrapping="true"/>
+								<Input value="{BIDMISFormModel>BidStatusCleaned}" editable="false" change="onChange" width="16.6rem" fieldGroupIds="myInputs"
+									class="formfield"/>
+							</HBox>
+							<HBox class="contentMargin sapUiMediumMarginBegin">
+								<Label text="Bid Price Variance(INR Cr)" class="sapUiTinyMarginTop" width="9rem" wrapping="true"/>
+								<Input type="Number" value="{BIDMISFormModel>BidPriceVarINRLakhs}" change="onChange" width="16.6rem" fieldGroupIds="myInputs"
+									class="formfield"/>
+							</HBox>
+						</HBox>
+						<HBox justifyContent="Center">
+							<HBox class="contentMargin">
+								<Label text="Negotiated Price(INR Cr)" class="sapUiTinyMarginTop" width="9rem" wrapping="true"/>
+								<Input type="Number" value="{BIDMISFormModel>NegotiatedPrice}" change="onChange" width="16.6rem" fieldGroupIds="myInputs" class="formfield"/>
+							</HBox>
+							<HBox class="contentMargin sapUiMediumMarginBegin">
+								<Label text="Discounted Price" class="sapUiTinyMarginTop" width="9rem" wrapping="true"/>
+								<Input type="Number" value="{BIDMISFormModel>DiscountedPrice}" change="onChange" width="16.6rem" fieldGroupIds="myInputs" class="formfield"/>
+							</HBox>
+						</HBox>-->
+						<HBox justifyContent="Center">
+							<HBox class="contentMargin"></HBox>
+							<HBox class="contentMargin sapUiMediumMarginBegin"></HBox>
+						</HBox>
+					</VBox>
+				</form:content>
+			</form:SimpleForm>
+		</Panel>
+		<Panel visible="{=${selectedDashboard>/SelectedKey}==='form2' &amp;&amp; ${selectedSectionDetailModel>/mastertable}===true &amp;&amp; ${data>/BIDForms/0/Access}==='F'}">
+			<t:Table id="tableFormBid" selectionMode="Single" selectionBehavior="RowOnly" alternateRowColors="true" rows="{formTableModel>/bidmistable}"
+				rowHeight="25" visibleRowCount="16" enableCellFilter="true" ariaLabelledBy="title" class="uiTable formTable"
+				rowSelectionChange="onRowSelected">
+				<t:extension>
+					<OverflowToolbar>
+						<ToolbarSpacer/>
+						<Link text="Back" press="onBackToForm" class="sapUiSmallMarginTop sapUiTinyMarginEnd"/>
+						<ImageContent src="sap-icon://excel-attachment" press="onExport" tooltip="Download" class="sapUiSmallMarginBottom uitableIC"/>
+						<ImageContent src="sap-icon://sorting-ranking" tooltip="clear sorting" press="clearSorting" class="sapUiSmallMarginBottom uitableIC"/>
+						<ImageContent src="sap-icon://clear-filter" tooltip="clear filter" press="clearFilters" class="sapUiSmallMarginBottom uitableIC"/>
+					</OverflowToolbar>
+				</t:extension>
+				<t:columns>
+					<t:Column width="11rem" filterProperty="BidName" sortProperty="BidName" hAlign="Center">
+						<Label text="Bid Name" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{formTableModel>BidName}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="11rem" hAlign="Center">
+						<Label text="Receipt Date" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{path:'formTableModel>DateReceSED',formatter:'.handleSearchDate'}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="9rem" filterProperty="EnquiryRefNo" sortProperty="EnquiryRefNo" hAlign="Center">
+						<Label text="Enquiry Ref. No." wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{formTableModel>EnquiryRefNo}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="9rem" hAlign="Center">
+						<Label text="RFP Date" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{path:'formTableModel>RFPDate',formatter:'.handleSearchDate'}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="9rem" hAlign="Center">
+						<Label text="Bid RFP Submission Date" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{path:'formTableModel>BidSubmDateRFP',formatter:'.handleSearchDate'}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="11rem" filterProperty="PrimaryCustomer" sortProperty="PrimaryCustomer" hAlign="Center">
+						<Label text="Primary Customer" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{formTableModel>PrimaryCustomer}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="11rem" filterProperty="BDNAME" sortProperty="BDNAME" hAlign="Center">
+						<Label text="Business Domain" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{formTableModel>BDNAME}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="9rem" filterProperty="CustSegmentName" sortProperty="CustSegmentName" hAlign="Center">
+						<Label text="Customer Segment" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{formTableModel>CustSegmentName}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="11rem" filterProperty="GO_NO" sortProperty="GO_NO" hAlign="Center">
+						<Label text="GO / NO" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{formTableModel>GO_NO}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="11rem" filterProperty="ProposalRefNo" sortProperty="ProposalRefNo" hAlign="Center">
+						<Label text="Proposal Ref. No." wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{formTableModel>ProposalRefNo}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="9rem" hAlign="Center">
+						<Label text="Actual Bid Submission Date" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{path:'formTableModel>BidSubmDateActual',formatter:'.handleSearchDate'}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="9rem" hAlign="Center">
+						<Label text="Expected Open Date" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Label text="{path:'formTableModel>ExpectedOpenDate',formatter:'.handleSearchDate'}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="9rem" hAlign="Center">
+						<Label text="Indicative Bid Value" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{formTableModel>IndicativeBidValue}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="9rem" hAlign="Center">
+						<Label text="Bid Value" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{formTableModel>BidValue}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="11rem" filterProperty="BIDTypeName" sortProperty="BIDTypeName" hAlign="Center">
+						<Label text="Bid Type" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{formTableModel>BIDTypeName}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="11rem" hAlign="Center">
+						<Label text="Bid Validity" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{path:'formTableModel>BidValid',formatter:'.handleSearchDate'}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="9rem" filterProperty="EMD_BG_DD_Details" sortProperty="EMD_BG_DD_Details" hAlign="Center">
+						<Label text="EMD/BG DD. Details" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{formTableModel>EMD_BG_DD_Details}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="11rem" hAlign="Center">
+						<Label text="EMD/BG Value" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{formTableModel>EMDBGValue}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="11rem" hAlign="Center">
+						<Label text="EMD/BG Validity" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{path:'formTableModel>EMDBGValidity',formatter:'.handleSearchDate'}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="9rem" filterProperty="PartnerBGDetails" sortProperty="PartnerBGDetails" hAlign="Center">
+						<Label text="Partner BG Details" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{formTableModel>PartnerBGDetails}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="9rem" hAlign="Center">
+						<Label text="Partner BG Value" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{formTableModel>PartnerBGValue}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="9rem" hAlign="Center">
+						<Label text="Partner BG Validity" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{path:'formTableModel>PartnerBGValidity',formatter:'.handleSearchDate'}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="11rem" filterProperty="SubmittedFromName" sortProperty="SubmittedFromName" hAlign="Center">
+						<Label text="Submitted From" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{formTableModel>SubmittedFromName}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="11rem" filterProperty="TENDERName" sortProperty="TENDERName" hAlign="Center">
+						<Label text="Tender Type" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{formTableModel>TENDERName}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="9rem" hAlign="Center">
+						<Label text="EstiL1 Target Price" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Label text="{formTableModel>EstiL1TargetPrice}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="9rem" filterProperty="TargetPriceMet" sortProperty="TargetPriceMet" hAlign="Center">
+						<Label text="Target Price Met." wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Label text="{formTableModel>TargetPriceMet}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="9rem" filterProperty="BidStatusName" sortProperty="BidStatusName" hAlign="Center">
+						<Label text="Bid Status" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Label text="{formTableModel>BidStatusName}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="9rem" hAlign="Center">
+						<Label text="L1 Price of Lost Bids" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Label text="{formTableModel>L1PriceLostBids}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="9rem" hAlign="Center">
+						<Label text="Gross Contribution Margin(%)" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Label text="{formTableModel>GrossContriMargin}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="9rem" hAlign="Center">
+						<Label text="EBIDTA Margin(%)" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Label text="{formTableModel>EBIDTAMargin}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="9rem" hAlign="Center">
+						<Label text="Cash PBT Margin(%)" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Label text="{formTableModel>CashPBTMargin}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="9rem" filterProperty="PONo" sortProperty="PONo" hAlign="Center">
+						<Label text="PO No." wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Label text="{formTableModel>PONo}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="9rem" hAlign="Center">
+						<Label text="PO Date" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Label text="{path:'formTableModel>PODate',formatter:'.handleSearchDate'}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="9rem" hAlign="Center">
+						<Label text="PO Value" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Label text="{formTableModel>POValue}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<!--<t:Column width="9rem" filterProperty="ContractSignYR" sortProperty="ContractSignYR" hAlign="Center">
+						<Label text="PO Value (INR Cr)" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Label text="{formTableModel>POValueLakh}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>-->
+					<t:Column width="9rem" hAlign="Center">
+						<Label text="Budget PM Release Date" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Label text="{path:'formTableModel>BudgetPMReleaseDate',formatter:'.handleSearchDate'}" wrapping="true" class="TableLabel"
+								textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="9rem" hAlign="Center">
+						<Label text="Bid Opening Date" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Label text="{path:'formTableModel>BidOpenDate',formatter:'.handleSearchDate'}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="9rem" hAlign="Center">
+						<Label text="L2 Price Won Bids (INR Cr)" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Label text="{formTableModel>L2PriceWonBidsLakhs2}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="9rem" hAlign="Center">
+						<Label text="L1 Price Lost Bids(INR Cr)" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Label text="{formTableModel>L1PriceLostBidsLakhs}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="9rem" filterProperty="LostduetoName" sortProperty="LostduetoName" hAlign="Center">
+						<Label text="Lost Due to" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Label text="{formTableModel>LostduetoName}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="9rem" hAlign="Center">
+						<Label text="Material Cost(INR Cr)" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Label text="{formTableModel>MaterialCostCr}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="9rem" hAlign="Center">
+						<Label text="Manpower Cost(INR Cr)" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Label text="{formTableModel>ManpoweCostCr}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="9rem" hAlign="Center">
+						<Label text="Miss. Cost(INR Cr)" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Label text="{formTableModel>MissCostCr}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="9rem" hAlign="Center">
+						<Label text="Overhead Cost (INR Cr)" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Label text="{formTableModel>OverheadCostCr}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="9rem" hAlign="Center">
+						<Label text="Interest Cost(INR Cr)" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Label text="{formTableModel>InterestCostCr}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="9rem" hAlign="Center">
+						<Label text="Risk Factor Cost(INR Cr)" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Label text="{formTableModel>RiskFactCostCr}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="9rem" hAlign="Center">
+						<Label text="Risk FE Var Cost(INR Cr)" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Label text="{formTableModel>RiskFEVarCostCr}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="9rem" hAlign="Center">
+						<Label text="Profit Margin(INR Cr)" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Label text="{formTableModel>ProfitMarginCr}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="9rem" hAlign="Center">
+						<Label text="Negotiation Margin(INR Cr)" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Label text="{formTableModel>NegotMarginCr}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="9rem" filterProperty="OtherBidder" sortProperty="OtherBidder" hAlign="Center">
+						<Label text="Other Bidders and their Price" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Label text="{formTableModel>OtherBidder}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="9rem" filterProperty="Remarks" sortProperty="Remarks" hAlign="Center">
+						<Label text="Remarks" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Label text="{formTableModel>Remarks}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="9rem" hAlign="Center">
+						<Label text="Bid Submission Period" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Label text="{formTableModel>BidSubmissionPeriod}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="9rem" filterProperty="BidStatusCleaned" sortProperty="BidStatusCleaned" hAlign="Center">
+						<Label text="Bid Cleaned Status" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Label text="{formTableModel>BidStatusCleaned}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="9rem" hAlign="Center">
+						<Label text="Bid Price Var(INR Cr)" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Label text="{formTableModel>BidPriceVarINRLakhs}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<!--<t:Column width="9rem" filterProperty="ContractSignYR" sortProperty="ContractSignYR" hAlign="Center">
+						<Label text="KPI2 Filter" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Label text="{formTableModel>KPI2Filter}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>-->
+					<t:Column width="9rem" hAlign="Center">
+						<Label text="RFP Period" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Label text="{formTableModel>RFPPeriod}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="9rem" hAlign="Center">
+						<Label text="FY Quarter Opening Date" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Label text="{formTableModel>OpenDateFYQuarter}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="9rem" filterProperty="WinProbability" sortProperty="WinProbability" hAlign="Center">
+						<Label text="Winning Probability" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Label text="{formTableModel>WinProbability}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+				</t:columns>
+			</t:Table>
+		</Panel>
+		<Panel visible="{=${selectedDashboard>/SelectedKey}==='form3' &amp;&amp; ${selectedSectionDetailModel>/mastertable}===false &amp;&amp; ${data>/BIDForms/1/Access}==='F'}">
+			<form:SimpleForm id="BIDCALForm" layout="ResponsiveLayout" class="sapUiSizeCompact" labelSpanL="5" labelSpanM="5" adjustLabelSpan="false"
+				emptySpanL="0" emptySpanM="0" columnsL="2" columnsM="2" singleContainerFullSize="false" binding="{BIDCALFormModel>/BIDCALFormData/0/}">
+				<form:toolbar>
+					<Toolbar>
+						<ToolbarSpacer/>
+						<Link press="onFormToTableLinkPress" text="Details" id="bidcalformlink"/>
+					</Toolbar>
+				</form:toolbar>
+				<form:content>
+					<VBox>
+						<HBox justifyContent="Center">
+							<HBox class="contentMargin ">
+								<Label text="Bid Status" class="sapUiTinyMarginTop" width="9rem"/>
+								<ComboBox width="16.6rem" selectedKey="{BIDCALFormModel>BidStatus}" id="bidcalfield1" fieldGroupIds="myInputs" class="formfield">
+									<items>
+										<core:Item key="Open" text="Open"/>
+										<core:Item key="Submitted" text="Submitted"/>
+										<core:Item key="Shortclosed by customer" text="Shortclosed by customer"/>
+									</items>
+								</ComboBox>
+							</HBox>
+							<HBox class="contentMargin sapUiMediumMarginBegin">
+								<Label text="Business Domain" class="sapUiTinyMarginTop" width="9rem"/>
+								<ComboBox width="16.6rem"
+									items="{path:'TATA_BD>/dataModel',length:10000,filters: [{ path: 'TYPE', operator: 'EQ', value1: 'C' },{ path: 'Locked', operator: 'EQ', value1: 'N' }], sorter: { path: 'BDNAME' }}"
+									selectedKey="{BIDCALFormModel>BusinessDomain}" change="onBDCSChange" id="bidcalfield2" fieldGroupIds="myInputs" class="formfield">
+									<items>
+										<core:Item key="{TATA_BD>BDID}" text="{TATA_BD>BDNAME}"/>
+									</items>
+								</ComboBox>
+							</HBox>
+						</HBox>
+						<HBox justifyContent="Center">
+							<HBox class="contentMargin ">
+								<Label text="Bid Category" class="sapUiTinyMarginTop" width="9rem"/>
+								<ComboBox width="16.6rem" selectedKey="{BIDCALFormModel>BidCategory}" id="bidcalfield3" fieldGroupIds="myInputs" class="formfield">
+									<items>
+										<core:Item key="Budgetary" text="Budgetary"/>
+										<core:Item key="Firm" text="Firm"/>
+									</items>
+								</ComboBox>
+							</HBox>
+							<HBox class="contentMargin sapUiMediumMarginBegin">
+								<Label text="Tech Bid Manager" class="sapUiTinyMarginTop" width="9rem"/>
+								<ComboBox width="16.6rem"
+									items="{path:'TATA_TechMgr>/dataModel',length:10000,filters: [{ path: 'Locked', operator: 'EQ', value1: 'N' }], sorter: { path: 'BidTechMgr' }}"
+									selectedKey="{BIDCALFormModel>BidTechMgr}" change="onChange" id="bidcalfield4" fieldGroupIds="myInputs" class="formfield">
+									<items>
+										<core:Item key="{TATA_TechMgr>ID}" text="{TATA_TechMgr>BidTechMgr}"/>
+									</items>
+								</ComboBox>
+							</HBox>
+						</HBox>
+						<HBox justifyContent="Center">
+							<HBox class="contentMargin ">
+								<Label text="Bid Details" class="sapUiTinyMarginTop" width="9rem"/>
+								<Input type="Text" value="{BIDCALFormModel>BidDetails}" width="16.6rem" maxLength="200" id="bidcalfield5" liveChange="onChange"
+									fieldGroupIds="myInputs" class="formfield"/>
+							</HBox>
+							<HBox class="contentMargin sapUiMediumMarginBegin">
+								<Label text="Bid Type" class="sapUiTinyMarginTop" width="9rem"/>
+								<ComboBox width="16.6rem" selectedKey="{BIDCALFormModel>BidType}" change="onChange" id="bidcalfield6" fieldGroupIds="myInputs"
+									class="formfield">
+									<items>
+										<core:Item key="Competitive" text="Competitive"/>
+										<core:Item key="Nomination" text="Nomination"/>
+										<core:Item key="Single Vendor" text="Single Vendor"/>
+									</items>
+								</ComboBox>
+							</HBox>
+						</HBox>
+						<HBox justifyContent="Center">
+							<HBox class="contentMargin">
+								<Label text="RFP Receipt Date" class="sapUiTinyMarginTop" width="9rem"/>
+								<DatePicker dateValue="{BIDCALFormModel>RFP_ReceiptDate}" displayFormat="dd-MM-YYYY" width="16.6rem" change="onChange" id="bidcalfield7"
+									fieldGroupIds="myInputs" class="formfield"/>
+							</HBox>
+							<HBox class="contentMargin sapUiMediumMarginBegin">
+								<Label text="Bid Submission Date" class="sapUiTinyMarginTop" width="9rem"/>
+								<DatePicker dateValue="{BIDCALFormModel>BidSubmissionDate}" displayFormat="dd-MM-YYYY" width="16.6rem" change="onChange" id="bidcalfield8"
+									fieldGroupIds="myInputs" class="formfield"/>
+							</HBox>
+						</HBox>
+						<HBox justifyContent="Center">
+							<HBox class="contentMargin">
+								<Label text="BD Head" class="sapUiTinyMarginTop" width="9rem"/>
+								<ComboBox
+									items="{path:'TATA_BD>/dataModel',length:10000,filters: [{ path: 'TYPE', operator: 'EQ', value1: 'C' },{ path: 'Locked', operator: 'EQ', value1: 'N' }], sorter: { path: 'BDDESC' }}"
+									width="16.6rem" selectedKey="{POPFormModel>PGDName}" id="bidcalfield9" change="onBDCSChange" fieldGroupIds="myInputs" class="formfield"
+									enabled="false" editable="false">
+									<items>
+										<core:Item key="{TATA_BD>BDID}" text="{TATA_BD>BDDESC}"/>
+									</items>
+								</ComboBox>
+								<!--<ComboBox width="16.6rem" selectedKey="{BIDCALFormModel>BDLead}" change="onChange" id="bidcalfield9" fieldGroupIds="myInputs"
+									class="formfield">
+									<items>
+										<core:Item key="1" text="1"/>
+										<core:Item key="2" text="2"/>
+										<core:Item key="3" text="3"/>
+									</items>
+								</ComboBox>-->
+							</HBox>
+							<HBox class="contentMargin sapUiMediumMarginBegin">
+								<Label text="Business" class="sapUiTinyMarginTop" width="9rem"/>
+								<ComboBox width="16.6rem" selectedKey="{BIDCALFormModel>Business}" change="onChange" id="bidcalfield10" fieldGroupIds="myInputs"
+									class="formfield">
+									<items>
+										<core:Item key="Completed" text="Completed"/>
+										<core:Item key="Delayed" text="Delayed"/>
+										<core:Item key="In Progress" text="In Progress"/>
+										<core:Item key="Not Required" text="Not Required"/>
+									</items>
+								</ComboBox>
+							</HBox>
+						</HBox>
+						<HBox justifyContent="Center">
+							<HBox class="contentMargin">
+								<Label text="Technical" class="sapUiTinyMarginTop" width="9rem"/>
+								<ComboBox width="16.6rem" selectedKey="{BIDCALFormModel>Technical}" change="onChange" id="bidcalfield11" fieldGroupIds="myInputs"
+									class="formfield">
+									<items>
+										<core:Item key="Completed" text="Completed"/>
+										<core:Item key="Delayed" text="Delayed"/>
+										<core:Item key="In Progress" text="In Progress"/>
+										<core:Item key="Not Required" text="Not Required"/>
+									</items>
+								</ComboBox>
+							</HBox>
+							<HBox class="contentMargin sapUiMediumMarginBegin">
+								<Label text="Finance" class="sapUiTinyMarginTop" width="9rem"/>
+								<ComboBox width="16.6rem" selectedKey="{BIDCALFormModel>Finance}" change="onChange" id="bidcalfield12" fieldGroupIds="myInputs"
+									class="formfield">
+									<items>
+										<core:Item key="Completed" text="Completed"/>
+										<core:Item key="Delayed" text="Delayed"/>
+										<core:Item key="In Progress" text="In Progress"/>
+										<core:Item key="Not Required" text="Not Required"/>
+									</items>
+								</ComboBox>
+							</HBox>
+						</HBox>
+						<HBox justifyContent="Center">
+							<HBox class="contentMargin">
+								<Label text="Legal" class="sapUiTinyMarginTop" width="9rem"/>
+								<ComboBox width="16.6rem" selectedKey="{BIDCALFormModel>Legal}" change="onChange" id="bidcalfield13" fieldGroupIds="myInputs"
+									class="formfield">
+									<items>
+										<core:Item key="Completed" text="Completed"/>
+										<core:Item key="Delayed" text="Delayed"/>
+										<core:Item key="In Progress" text="In Progress"/>
+										<core:Item key="Not Required" text="Not Required"/>
+									</items>
+								</ComboBox>
+							</HBox>
+							<HBox class="contentMargin sapUiMediumMarginBegin">
+								<Label text="SCM" class="sapUiTinyMarginTop" width="9rem"/>
+								<ComboBox width="16.6rem" selectedKey="{BIDCALFormModel>SCM}" change="onChange" id="bidcalfield14" fieldGroupIds="myInputs"
+									class="formfield">
+									<items>
+										<core:Item key="Completed" text="Completed"/>
+										<core:Item key="Delayed" text="Delayed"/>
+										<core:Item key="In Progress" text="In Progress"/>
+										<core:Item key="Not Required" text="Not Required"/>
+									</items>
+								</ComboBox>
+							</HBox>
+						</HBox>
+						<HBox justifyContent="Center">
+							<HBox class="contentMargin">
+								<Label text="Bid Value" class="sapUiTinyMarginTop" width="9rem"/>
+								<Input type="Number" value="{BIDCALFormModel>BidValue}" width="16.6rem" liveChange="onChange" id="bidcalfield15" fieldGroupIds="myInputs"
+									class="formfield"/>
+							</HBox>
+							<HBox class="contentMargin sapUiMediumMarginBegin">
+								<Label text="General Remark" class="sapUiTinyMarginTop" width="9rem"/>
+								<Input type="Text" value="{BIDCALFormModel>Remark}" width="16.6rem" liveChange="onChange" id="bidcalfield16" fieldGroupIds="myInputs"
+									class="formfield"/>
+							</HBox>
+						</HBox>
+					</VBox>
+				</form:content>
+			</form:SimpleForm>
+		</Panel>
+		<Panel visible="{=${selectedDashboard>/SelectedKey}==='form3' &amp;&amp; ${selectedSectionDetailModel>/mastertable}===true &amp;&amp; ${data>/BIDForms/1/Access}==='F'}">
+			<t:Table id="bidcalformtable" selectionMode="Single" selectionBehavior="RowOnly" alternateRowColors="true"
+				rows="{formTableModel>/bidcaltable}" rowHeight="25" visibleRowCount="16" enableCellFilter="true" filter="filterPrice" ariaLabelledBy="title"
+				class="uiTable formTable" rowSelectionChange="onRowSelected">
+				<t:extension>
+					<OverflowToolbar>
+						<ToolbarSpacer/>
+						<Link text="Back" press="onBackToForm" class="sapUiSmallMarginTop sapUiTinyMarginEnd"/>
+						<ImageContent src="sap-icon://excel-attachment" press="onExport" tooltip="Download" class="sapUiSmallMarginBottom uitableIC"/>
+						<ImageContent src="sap-icon://sorting-ranking" tooltip="clear sorting" press="clearSorting" class="sapUiSmallMarginBottom uitableIC"/>
+						<ImageContent src="sap-icon://clear-filter" tooltip="clear filter" press="clearFilters" class="sapUiSmallMarginBottom uitableIC"/>
+					</OverflowToolbar>
+				</t:extension>
+				<t:columns>
+					<t:Column width="11rem" filterProperty="BidStatus" sortProperty="BidStatus" hAlign="Center">
+						<Label text="Bid Status" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{formTableModel>BidStatus}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="11rem" filterProperty="BidDetails" sortProperty="BidDetails" hAlign="Center">
+						<Label text="Bid Details" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{formTableModel>BidDetails}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="9rem" filterProperty="BDNAME" sortProperty="BDNAME" hAlign="Center">
+						<Label text="Business Domain" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{path:'formTableModel>BDNAME',formatter:'.ampFormatter'}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="9rem" filterProperty="BDDESC" sortProperty="BDDESC" hAlign="Center">
+						<Label text="Vertical Head" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{path:'formTableModel>BDDESC',formatter:'.ampFormatter'}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="9rem" filterProperty="BidType" sortProperty="BidType" hAlign="Center">
+						<Label text="Bid Type" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{formTableModel>BidType}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="11rem" filterProperty="BidCategory" sortProperty="BidCategory" hAlign="Center">
+						<Label text="Bid Category" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{formTableModel>BidCategory}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="11rem" filterProperty="TechMgrName" sortProperty="TechMgrName" hAlign="Center">
+						<Label text="Tech Bid Manager" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{formTableModel>TechMgrName}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="9rem" hAlign="Center">
+						<Label text="RFP Receipt Date" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Label text="{path:'formTableModel>RFP_ReceiptDate',formatter:'.handleSearchDate'}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="11rem" hAlign="Center">
+						<Label text="Bid Submission Date" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{path:'formTableModel>BidSubmissionDate',formatter:'.handleSearchDate'}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="11rem" hAlign="Center">
+						<Label text="Days to Bid" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{formTableModel>DaysToBid}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="9rem" filterProperty="Business" sortProperty="Business" hAlign="Center">
+						<Label text="Business" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Label text="{formTableModel>Business}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="11rem" filterProperty="Technical" sortProperty="Technical" hAlign="Center">
+						<Label text="Technical" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{formTableModel>Technical}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="11rem" filterProperty="Finance" sortProperty="Finance" hAlign="Center">
+						<Label text="Finance" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{formTableModel>Finance}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="9rem" filterProperty="Legal" sortProperty="Legal" hAlign="Center">
+						<Label text="Legal" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Label text="{formTableModel>Legal}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="11rem" filterProperty="SCM" sortProperty="SCM" hAlign="Center">
+						<Label text="SCM" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{formTableModel>SCM}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="11rem" filterProperty="Remark" sortProperty="Remark" hAlign="Center">
+						<Label text="Remark" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{formTableModel>Remark}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+				</t:columns>
+			</t:Table>
+		</Panel>
+	</Panel>
+	<Panel visible="{=${selectedSectionDetailModel>/sectionName}==='Master Config'?true:false}" backgroundDesign="Transparent"
+		class="mainPanelClassFormBid">
+		<Toolbar class="mastrcnfgToolbr sapUiTinyMarginTop ">
+			<ComboBox items="{data>/Item/3/nodes}" class="mastrcnfgCmbobx" selectedKey="" change="onMasterItemChange" id="mccmbxUsrGrp1" width="25%"
+				fieldGroupIds="myInputs">
+				<items>
+					<core:Item key="{data>Text}" text="{data>Text}"/>
+				</items>
+			</ComboBox>
+			<ToolbarSpacer/>
+		</Toolbar>
+		<Panel visible="{=${selectedDashboard>/SelectedKey}==='User Group' &amp;&amp; ${selectedDashboard>/chart}===true &amp;&amp; ${data>/Item/3/nodes/0/Access}==='F'}" class="formPanelMCnfg">
+			<form:SimpleForm id="UserGrp" layout="ResponsiveGridLayout" editable="false" class="sapUiSizeCompact FormTitle Mastrcnfgfrm" labelSpanXL="3"
+				labelSpanL="3" labelSpanM="3" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="4" emptySpanL="4" emptySpanM="4" emptySpanS="0"
+				columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false" binding="{SetupScreenModel>/SetUpUserGrpArrData/0/}">
+				<form:toolbar>
+					<Toolbar class="formToolBarMCfg">
+						<Title text="{selectedDashboard>/SelectedKey}"/>
+						<ToolbarSpacer/>
+						<Link press="onButtonTabel" text="Details"/>
+					</Toolbar>
+				</form:toolbar>
+				<form:content>
+					<core:Title/>
+					<Label text="Group Name" class="sapUiTinyMarginTop"/>
+					<Input type="Text" value="{SetupScreenModel>GROUPNAME}" id="ugfield1" fieldGroupIds="myInputs" class="formfield"/>
+					<Label text="Description" class="sapUiTinyMarginTop"/>
+					<Input type="Text" value="{SetupScreenModel>GROUPDESC}" maxLength="100" id="ugfield2" fieldGroupIds="myInputs" class="formfield"/>
+					<Label text="Active" class="sapUiTinyMarginTop"/>
+					<RadioButtonGroup columns="2" selectedIndex="{SetupScreenModel>Locked}" id="ugfield3">
+						<RadioButton text="Yes"/>
+						<RadioButton text="No"/>
+					</RadioButtonGroup>
+				</form:content>
+			</form:SimpleForm>
+		</Panel>
+		<Panel visible="{=${selectedDashboard>/SelectedKey}==='User Group' &amp;&amp; ${selectedDashboard>/chart}===false &amp;&amp; ${data>/Item/3/nodes/0/Access}==='F'}">
+			<t:Table id="tableFormUsrGrp" selectionMode="None" rows="{TATA_USER_GRP>/dataModel}" visibleRowCount="10" enableCellFilter="true"
+				ariaLabelledBy="title" class="masterconfigTable1" width="35rem">
+				<t:extension>
+					<OverflowToolbar>
+						<ToolbarSpacer/>
+						<Link text="Back" press="onButtonForm" class="sapUiSmallMarginTop sapUiTinyMarginEnd"/>
+						<ImageContent src="sap-icon://sorting-ranking" tooltip="clear sorting" press="clearSorting" class="sapUiSmallMarginBottom uitableIC"/>
+						<ImageContent src="sap-icon://clear-filter" tooltip="clear filter" press="clearFilters" class="sapUiSmallMarginBottom uitableIC"/>
+					</OverflowToolbar>
+				</t:extension>
+				<t:columns>
+					<t:Column width="11rem" filterProperty="GROUPNAME" sortProperty="GROUPNAME" hAlign="Center">
+						<Label text="Group" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{TATA_USER_GRP>GROUPNAME}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="11rem" filterProperty="GROUPDESC" sortProperty="GROUPDESC" hAlign="Center">
+						<Label text="Description" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{TATA_USER_GRP>GROUPDESC}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="6rem" sortProperty="Locked" hAlign="Center">
+						<Label text="Active" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Switch state="{=${TATA_USER_GRP>Locked}==='N'?true:false}" customTextOn=" " customTextOff=" " class="switchClass" enabled="false"/>
+							<!--<Text text="{TATA_USER_GRP>Locked}" wrapping="true"/>-->
+						</t:template>
+					</t:Column>
+					<t:Column width="4rem" hAlign="Center">
+						<Label text="Edit" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Image src="{imageModel>/path}/images/pencil.png" height="23px" decorative="false" press="onPencilPress"/>
+						</t:template>
+					</t:Column>
+				</t:columns>
+			</t:Table>
+		</Panel>
+		<Panel visible="{=${selectedDashboard>/SelectedKey}==='User' &amp;&amp; ${selectedDashboard>/chart}===true &amp;&amp; ${data>/Item/3/nodes/1/Access}==='F'}" class="formPanelMCnfg">
+			<form:SimpleForm id="UserForm" layout="ResponsiveGridLayout" editable="false" class="sapUiSizeCompact FormTitle Mastrcnfgfrm"
+				labelSpanXL="3" labelSpanL="3" labelSpanM="3" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="4" emptySpanL="4" emptySpanM="4"
+				emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false" binding="{SetupScreenModel>/SetUpUserFormData/0/}">
+				<form:toolbar>
+					<Toolbar class="formToolBarMCfg">
+						<Title text="{selectedDashboard>/SelectedKey}"/>
+						<ToolbarSpacer/>
+						<Link press="onButtonTabel" text="Details"/>
+					</Toolbar>
+				</form:toolbar>
+				<form:content>
+					<core:Title/>
+					<Label text="User ID" class="sapUiTinyMarginTop"/>
+					<Input type="Text" value="{SetupScreenModel>USER_CODE}" id="ufield1" fieldGroupIds="myInputs" class="formfield"/>
+					<Label text="Name" class="sapUiTinyMarginTop"/>
+					<Input type="Text" value="{SetupScreenModel>U_NAME}" maxLength="100" id="ufield2" fieldGroupIds="myInputs" class="formfield"/>
+					<Label text="Email" class="sapUiTinyMarginTop"/>
+					<Input type="Text" placeholder="abc@xyz.com" value="{SetupScreenModel>Email}" maxLength="100" liveChange="onEmailChange" id="ufield3"
+						fieldGroupIds="myInputs" class="formfield"/>
+					<Label text="Mobile No" class="sapUiTinyMarginTop"/>
+					<Input type="Text" placeholder="Enter 10 digit number" value="{SetupScreenModel>MobileNo}" maxLength="100" liveChange="onMobNumChange"
+						id="ufield4" fieldGroupIds="myInputs" class="formfield"/>
+					<Label text="Group Name" class="sapUiTinyMarginTop"/>
+					<ComboBox
+						items="{path:'TATA_USER_GRP>/dataModel',length:10000,filters: [{ path: 'Locked', operator: 'EQ', value1: 'N' }], sorter: { path: 'GROUPNAME' }}"
+						selectedKey="{SetupScreenModel>GROUPID}" id="ufield5" fieldGroupIds="myInputs" class="formfield">
+						<items>
+							<core:Item key="{TATA_USER_GRP>GROUPID}" text="{TATA_USER_GRP>GROUPNAME}"/>
+						</items>
+					</ComboBox>
+					<Label text="Super User" class="sapUiTinyMarginTop"/>
+					<RadioButtonGroup columns="2" selectedIndex="{SetupScreenModel>SUPERUSER}" id="ufield6">
+						<RadioButton text="Yes"/>
+						<RadioButton text="No"/>
+					</RadioButtonGroup>
+					<Label text="Active"/>
+					<RadioButtonGroup columns="2" selectedIndex="{SetupScreenModel>Locked}" id="ufield7">
+						<RadioButton text="Yes"/>
+						<RadioButton text="No"/>
+					</RadioButtonGroup>
+					<Label text="Password" class="sapUiTinyMarginTop"/>
+					<Input type="Text" value="{SetupScreenModel>PASSWORD}" class="iocnclass formfield" maxLength="100" showValueHelp="true" change="onChange"
+						id="ufield8" fieldGroupIds="myInputs"/>
+				</form:content>
+			</form:SimpleForm>
+		</Panel>
+		<Panel visible="{=${selectedDashboard>/SelectedKey}==='User' &amp;&amp; ${selectedDashboard>/chart}===false &amp;&amp; ${data>/Item/3/nodes/1/Access}==='F'}">
+			<t:Table id="tableFormUsr" selectionMode="None" rows="{TATA_USER>/dataModel}" visibleRowCount="10" enableCellFilter="true" width="56rem"
+				ariaLabelledBy="title" class="masterconfigTable2">
+				<t:extension>
+					<OverflowToolbar>
+						<ToolbarSpacer/>
+						<Link text="Back" press="onButtonForm" class="sapUiSmallMarginTop sapUiTinyMarginEnd"/>
+						<ImageContent src="sap-icon://sorting-ranking" tooltip="clear sorting" press="clearSorting" class="sapUiSmallMarginBottom uitableIC"/>
+						<ImageContent src="sap-icon://clear-filter" tooltip="clear filter" press="clearFilters" class="sapUiSmallMarginBottom uitableIC"/>
+					</OverflowToolbar>
+				</t:extension>
+				<t:columns>
+					<t:Column width="11rem" filterProperty="USER_CODE" sortProperty="USER_CODE" hAlign="Center">
+						<Label text="User ID" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{TATA_USER>USER_CODE}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="11rem" filterProperty="U_NAME" sortProperty="U_NAME" hAlign="Center">
+						<Label text="Name" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{TATA_USER>U_NAME}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="6rem" filterProperty="SUPERUSER" sortProperty="SUPERUSER" hAlign="Center">
+						<Label text="Super User" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{=${TATA_USER>SUPERUSER}==='Y'?'YES':'NO'}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="9rem" hAlign="Center" filterProperty="PASSWORD" sortProperty="PASSWORD">
+						<Label text="Password" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{TATA_USER>PASSWORD}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="7rem" filterProperty="MobileNo" sortProperty="MobileNo" hAlign="Center">
+						<Label text="Mobile No." wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{TATA_USER>MobileNo}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="6rem" sortProperty="Locked" hAlign="Center">
+						<Label text="Active" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Switch state="{=${TATA_USER>Locked}==='N'?true:false}" customTextOn=" " customTextOff=" " class="switchClass" enabled="false"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="4rem" hAlign="Center">
+						<Label text="Edit" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Image src="{imageModel>/path}/images/pencil.png" height="23px" decorative="false" press="onPencilPress"/>
+						</t:template>
+					</t:Column>
+				</t:columns>
+			</t:Table>
+		</Panel>
+		<Panel visible="{=${selectedDashboard>/SelectedKey}==='Year' &amp;&amp; ${selectedDashboard>/chart}===true &amp;&amp; ${data>/Item/3/nodes/2/Access}==='F'}" class="formPanelMCnfg">
+			<form:SimpleForm id="TATAFY" layout="ResponsiveGridLayout" editable="false" class="sapUiSizeCompact FormTitle Mastrcnfgfrm" labelSpanXL="3"
+				labelSpanL="3" labelSpanM="3" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="4" emptySpanL="4" emptySpanM="4" emptySpanS="0"
+				columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false" binding="{SetupScreenModel>/SetUpTataftyrArrData/0/}">
+				<form:toolbar>
+					<Toolbar class="formToolBarMCfg">
+						<Title text="{selectedDashboard>/SelectedKey}"/>
+						<ToolbarSpacer/>
+						<Link press="onButtonTabel" text="Details"/>
+					</Toolbar>
+				</form:toolbar>
+				<form:content>
+					<core:Title/>
+					<Label text="ID" class="sapUiTinyMarginTop"/>
+					<Input placeholder="Ex.- FY21, FY23..." type="Text" value="{SetupScreenModel>FYID}" change="onValidateYearID" id="yfield1"
+						fieldGroupIds="myInputs" class="formfield"/>
+					<Label text="From Date" class="sapUiTinyMarginTop"/>
+					<DatePicker dateValue="{SetupScreenModel>FromDate}" displayFormat="dd-MM-YYYY" change="onDateChange" id="yfield2" fieldGroupIds="myInputs"
+						class="formfield"/>
+					<Label text="To Date" class="sapUiTinyMarginTop"/>
+					<DatePicker dateValue="{SetupScreenModel>ToDate}" displayFormat="dd-MM-YYYY" change="onDateChange" id="yfield3" fieldGroupIds="myInputs"
+						class="formfield"/>
+					<Label text="Active" class="sapUiTinyMarginTop"/>
+					<RadioButtonGroup columns="2" selectedIndex="{SetupScreenModel>Locked}" id="yfield4">
+						<RadioButton text="Yes"/>
+						<RadioButton text="No"/>
+					</RadioButtonGroup>
+				</form:content>
+			</form:SimpleForm>
+		</Panel>
+		<Panel visible="{=${selectedDashboard>/SelectedKey}==='Year' &amp;&amp; ${selectedDashboard>/chart}===false &amp;&amp; ${data>/Item/3/nodes/2/Access}==='F'}">
+			<t:Table id="tableFormYear" selectionMode="None" rows="{TATA_FY>/dataModel}" visibleRowCount="10" enableCellFilter="true" width="36rem"
+				ariaLabelledBy="title" class="masterconfigTable3">
+				<t:extension>
+					<OverflowToolbar>
+						<ToolbarSpacer/>
+						<Link text="Back" press="onButtonForm" class="sapUiSmallMarginTop sapUiTinyMarginEnd"/>
+						<ImageContent src="sap-icon://sorting-ranking" tooltip="clear sorting" press="clearSorting" class="sapUiSmallMarginBottom uitableIC"/>
+						<ImageContent src="sap-icon://clear-filter" tooltip="clear filter" press="clearFilters" class="sapUiSmallMarginBottom uitableIC"/>
+					</OverflowToolbar>
+				</t:extension>
+				<t:columns>
+					<t:Column width="5rem" filterProperty="FYID" sortProperty="FYID" hAlign="Center">
+						<Label text="Year" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{TATA_FY>FYID}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="9rem" filterProperty="FromDate" sortProperty="FromDate" hAlign="Center">
+						<Label text="From Date" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{path:'TATA_FY>FromDate',formatter:'.handleSearchDate'}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="9rem" filterProperty="ToDate" sortProperty="ToDate" hAlign="Center">
+						<Label text="To Date" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{path:'TATA_FY>ToDate',formatter:'.handleSearchDate'}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="6rem" sortProperty="Locked" hAlign="Center">
+						<Label text="Active" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Switch state="{=${TATA_FY>Locked}==='N'?true:false}" customTextOn=" " customTextOff=" " class="switchClass" enabled="false"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="4rem" hAlign="Center">
+						<Label text="Edit" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Image src="{imageModel>/path}/images/pencil.png" height="23px" decorative="false" press="onPencilPress"/>
+						</t:template>
+					</t:Column>
+				</t:columns>
+			</t:Table>
+		</Panel>
+		<Panel visible="{=${selectedDashboard>/SelectedKey}==='Business Domain' &amp;&amp; ${selectedDashboard>/chart}===true &amp;&amp; ${data>/Item/3/nodes/3/Access}==='F'}"
+			class="formPanelMCnfg">
+			<form:SimpleForm id="BuisenessDomain" layout="ResponsiveGridLayout" editable="false" class="sapUiSizeCompact FormTitle Mastrcnfgfrm"
+				labelSpanXL="3" labelSpanL="3" labelSpanM="3" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="4" emptySpanL="4" emptySpanM="4"
+				emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false" binding="{SetupScreenModel>/SetUpBDArData/0/}">
+				<form:toolbar>
+					<Toolbar class="formToolBarMCfg">
+						<Title text="{selectedDashboard>/SelectedKey}"/>
+						<ToolbarSpacer/>
+						<Link press="onButtonTabel" text="Details"/>
+					</Toolbar>
+				</form:toolbar>
+				<form:content>
+					<core:Title/>
+					<Label text="Business Domain Name" class="sapUiTinyMarginTop"/>
+					<Input type="Text" value="{SetupScreenModel>BDNAME}" maxLength="100" change="onChange" id="bdfield1" fieldGroupIds="myInputs"
+						class="formfield"/>
+					<Label text="Vertical Head" class="sapUiTinyMarginTop"/>
+					<Input type="Text" value="{SetupScreenModel>BDDESC}" change="onChange" id="bdfield2" fieldGroupIds="myInputs" class="formfield"/>
+					<Label text="Type" class="sapUiTinyMarginTop"/>
+					<ComboBox selectedKey="{SetupScreenModel>TYPE}" change="onChange" id="bdfield3" fieldGroupIds="myInputs" class="formfield">
+						<items>
+							<core:Item key="P" text="Pipeline Of Project"/>
+							<core:Item key="B" text="Bid MIS"/>
+							<core:Item key="C" text="Bid Calendar"/>
+						</items>
+					</ComboBox>
+					<Label text="Active" class="sapUiTinyMarginTop"/>
+					<RadioButtonGroup columns="2" selectedIndex="{SetupScreenModel>Locked}">
+						<RadioButton text="Yes"/>
+						<RadioButton text="No"/>
+					</RadioButtonGroup>
+				</form:content>
+			</form:SimpleForm>
+		</Panel>
+		<Panel visible="{=${selectedDashboard>/SelectedKey}==='Business Domain' &amp;&amp; ${selectedDashboard>/chart}===false &amp;&amp; ${data>/Item/3/nodes/3/Access}==='F'}">
+			<t:Table id="tableFormBD" selectionMode="None" rows="{TATA_BD>/dataModel}" visibleRowCount="10" enableCellFilter="true" width="44rem"
+				ariaLabelledBy="title" class="masterconfigTable4">
+				<t:extension>
+					<OverflowToolbar>
+						<ToolbarSpacer/>
+						<Link text="Back" press="onButtonForm" class="sapUiSmallMarginTop sapUiTinyMarginEnd"/>
+						<ImageContent src="sap-icon://sorting-ranking" tooltip="clear sorting" press="clearSorting" class="sapUiSmallMarginBottom uitableIC"/>
+						<ImageContent src="sap-icon://clear-filter" tooltip="clear filter" press="clearFilters" class="sapUiSmallMarginBottom uitableIC"/>
+					</OverflowToolbar>
+				</t:extension>
+				<t:columns>
+					<t:Column width="11rem" filterProperty="BDNAME" sortProperty="BDNAME" hAlign="Center">
+						<Label text="Business Domain" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{TATA_BD>BDNAME}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="11rem" filterProperty="BDDESC" sortProperty="BDDESC" hAlign="Center">
+						<Label text="Vertical Head" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{TATA_BD>BDDESC}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="10rem" filterProperty="visibleType" sortProperty="visibleType" hAlign="Center">
+						<Label text="Type" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{TATA_BD>visibleType}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="6rem" sortProperty="Locked" hAlign="Center">
+						<Label text="Active" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Switch state="{=${TATA_BD>Locked}==='N'?true:false}" customTextOn=" " customTextOff=" " class="switchClass" enabled="false"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="4rem" hAlign="Center">
+						<Label text="Edit" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Image src="{imageModel>/path}/images/pencil.png" height="23px" decorative="false" press="onPencilPress"/>
+						</t:template>
+					</t:Column>
+				</t:columns>
+			</t:Table>
+		</Panel>
+		<Panel visible="{=${selectedDashboard>/SelectedKey}==='Business Sub Domain' &amp;&amp; ${selectedDashboard>/chart}===true &amp;&amp; ${data>/Item/3/nodes/4/Access}==='F'}"
+			class="formPanelMCnfg">
+			<form:SimpleForm id="BuisenessSubDomain" layout="ResponsiveGridLayout" editable="false" class="sapUiSizeCompact FormTitle Mastrcnfgfrm"
+				labelSpanXL="3" labelSpanL="3" labelSpanM="3" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="4" emptySpanL="4" emptySpanM="4"
+				emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false" binding="{SetupScreenModel>/SetUpBSDArData/0/}">
+				<form:toolbar>
+					<Toolbar class="formToolBarMCfg">
+						<Title text="{selectedDashboard>/SelectedKey}"/>
+						<ToolbarSpacer/>
+						<Link press="onButtonTabel" text="Details"/>
+					</Toolbar>
+				</form:toolbar>
+				<form:content>
+					<core:Title/>
+					<Label text="Business Domain" class="sapUiTinyMarginTop"/>
+					<ComboBox
+						items="{path:'TATA_BD>/dataModel',length:10000,filters:[{ path: 'Locked', operator: 'EQ', value1: 'N' }], sorter: { path: 'BDNAME' }}"
+						selectedKey="{SetupScreenModel>BDID}" change="onChange" id="bsdfield1" fieldGroupIds="myInputs" class="formfield">
+						<items>
+							<core:Item key="{TATA_BD>BDID}" text="{TATA_BD>BDNAME}"/>
+						</items>
+					</ComboBox>
+					<Label text="Business Sub Domain" class="sapUiTinyMarginTop"/>
+					<Input type="Text" value="{SetupScreenModel>BSDNAME}" maxLength="100" change="onChange" id="bsdfield2" fieldGroupIds="myInputs"
+						class="formfield"/>
+					<Label text="Description" class="sapUiTinyMarginTop"/>
+					<Input type="Text" value="{SetupScreenModel>BSDDESC}" maxLength="100" change="onChange" id="bsdfield3" fieldGroupIds="myInputs"
+						class="formfield"/>
+					<Label text="Active" class="sapUiTinyMarginTop"/>
+					<RadioButtonGroup columns="2" selectedIndex="{SetupScreenModel>Locked}">
+						<RadioButton text="Yes"/>
+						<RadioButton text="No"/>
+					</RadioButtonGroup>
+				</form:content>
+			</form:SimpleForm>
+		</Panel>
+		<Panel visible="{=${selectedDashboard>/SelectedKey}==='Business Sub Domain' &amp;&amp; ${selectedDashboard>/chart}===false &amp;&amp; ${data>/Item/3/nodes/4/Access}==='F'}">
+			<t:Table id="tableFormBSD" selectionMode="None" rows="{TATA_BSD>/dataModel}" visibleRowCount="10" enableCellFilter="true" width="35rem"
+				ariaLabelledBy="title" class="masterconfigTable5">
+				<t:extension>
+					<OverflowToolbar>
+						<ToolbarSpacer/>
+						<Link text="Back" press="onButtonForm" class="sapUiSmallMarginTop sapUiTinyMarginEnd"/>
+						<ImageContent src="sap-icon://sorting-ranking" tooltip="clear sorting" press="clearSorting" class="sapUiSmallMarginBottom uitableIC"/>
+						<ImageContent src="sap-icon://clear-filter" tooltip="clear filter" press="clearFilters" class="sapUiSmallMarginBottom uitableIC"/>
+					</OverflowToolbar>
+				</t:extension>
+				<t:columns>
+					<t:Column width="11rem" filterProperty="BSDNAME" sortProperty="BSDNAME" hAlign="Center">
+						<Label text="Business Sub Domain" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{TATA_BSD>BSDNAME}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="11rem" filterProperty="BSDDESC" sortProperty="BSDDESC" hAlign="Center">
+						<Label text="Description" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{TATA_BSD>BSDDESC}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="6rem" sortProperty="Locked" hAlign="Center">
+						<Label text="Active" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Switch state="{=${TATA_BSD>Locked}==='N'?true:false}" customTextOn=" " customTextOff=" " class="switchClass" enabled="false"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="4rem" hAlign="Center">
+						<Label text="Edit" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Image src="{imageModel>/path}/images/pencil.png" height="23px" decorative="false" press="onPencilPress"/>
+						</t:template>
+					</t:Column>
+				</t:columns>
+			</t:Table>
+		</Panel>
+		<Panel visible="{=${selectedDashboard>/SelectedKey}==='Customer Segment' &amp;&amp; ${selectedDashboard>/chart}===true &amp;&amp; ${data>/Item/3/nodes/5/Access}==='F'}"
+			class="formPanelMCnfg">
+			<form:SimpleForm id="CustomerSegment" layout="ResponsiveGridLayout" editable="false" class="sapUiSizeCompact FormTitle Mastrcnfgfrm"
+				labelSpanXL="3" labelSpanL="3" labelSpanM="3" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="4" emptySpanL="4" emptySpanM="4"
+				emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false" binding="{SetupScreenModel>/SetUpCSArData/0/}">
+				<form:toolbar>
+					<Toolbar class="formToolBarMCfg">
+						<Title text="{selectedDashboard>/SelectedKey}"/>
+						<ToolbarSpacer/>
+						<Link press="onButtonTabel" text="Details"/>
+					</Toolbar>
+				</form:toolbar>
+				<form:content>
+					<core:Title/>
+					<Label text="Customer Segment" class="sapUiTinyMarginTop"/>
+					<Input type="Text" value="{SetupScreenModel>CUSTSEGNAME}" change="onChange" id="csfield1" fieldGroupIds="myInputs" class="formfield"/>
+					<Label text="Active" class="sapUiTinyMarginTop"/>
+					<RadioButtonGroup columns="2" selectedIndex="{SetupScreenModel>Locked}">
+						<RadioButton text="Yes"/>
+						<RadioButton text="No"/>
+					</RadioButtonGroup>
+				</form:content>
+			</form:SimpleForm>
+		</Panel>
+		<Panel visible="{=${selectedDashboard>/SelectedKey}==='Customer Segment' &amp;&amp; ${selectedDashboard>/chart}===false &amp;&amp; ${data>/Item/3/nodes/5/Access}==='F'}">
+			<t:Table id="tableFormCS" selectionMode="None" rows="{TATA_CUSTSEG>/dataModel}" visibleRowCount="10" enableCellFilter="true" width="24rem"
+				ariaLabelledBy="title" class="masterconfigTable6">
+				<t:extension>
+					<OverflowToolbar>
+						<ToolbarSpacer/>
+						<Link text="Back" press="onButtonForm" class="sapUiSmallMarginTop sapUiTinyMarginEnd"/>
+						<ImageContent src="sap-icon://sorting-ranking" tooltip="clear sorting" press="clearSorting" class="sapUiSmallMarginBottom uitableIC"/>
+						<ImageContent src="sap-icon://clear-filter" tooltip="clear filter" press="clearFilters" class="sapUiSmallMarginBottom uitableIC"/>
+					</OverflowToolbar>
+				</t:extension>
+				<t:columns>
+					<t:Column width="11rem" filterProperty="CUSTSEGNAME" sortProperty="CUSTSEGNAME" hAlign="Center">
+						<Label text="Customer Segment" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{TATA_CUSTSEG>CUSTSEGNAME}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="6rem" sortProperty="Locked" hAlign="Center">
+						<Label text="Active" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Switch state="{=${TATA_CUSTSEG>Locked}==='N'?true:false}" customTextOn=" " customTextOff=" " class="switchClass" enabled="false"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="4rem" hAlign="Center">
+						<Label text="Edit" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Image src="{imageModel>/path}/images/pencil.png" height="23px" decorative="false" press="onPencilPress"/>
+						</t:template>
+					</t:Column>
+				</t:columns>
+			</t:Table>
+		</Panel>
+		<!--<Panel visible="{=${selectedDashboard>/SelectedKey}==='Partner Group' &amp;&amp; ${selectedDashboard>/chart}===true}" class="formPanelMCnfg">-->
+		<!--	<form:SimpleForm id="TATAPartnerGrp" layout="ResponsiveGridLayout" editable="false" class="sapUiSizeCompact FormTitle Mastrcnfgfrm"-->
+		<!--		labelSpanXL="3" labelSpanL="3" labelSpanM="3" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="4" emptySpanL="4" emptySpanM="4"-->
+		<!--		emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false"-->
+		<!--		binding="{SetupScreenModel>/SetUpTataPartnersGrpArrData/0/}">-->
+		<!--		<form:toolbar>-->
+		<!--			<Toolbar class="formToolBarMCfg">-->
+		<!--				<Title text="{selectedDashboard>/SelectedKey}"/>-->
+		<!--				<ToolbarSpacer/>-->
+		<!--				<Link press="onButtonTabel" text="Details"/>-->
+		<!--			</Toolbar>-->
+		<!--		</form:toolbar>-->
+		<!--		<form:content>-->
+		<!--			<core:Title/>-->
+		<!--			<Label text="Partner Group" class="sapUiTinyMarginTop"/>-->
+		<!--			<Input type="Text" value="{SetupScreenModel>PartGroName}" change="onChange" id="pgfield1" fieldGroupIds="myInputs" class="formfield"/>-->
+		<!--			<Label text="Active" class="sapUiTinyMarginTop"/>-->
+		<!--			<RadioButtonGroup columns="2" selectedIndex="{SetupScreenModel>Locked}">-->
+		<!--				<RadioButton text="Yes"/>-->
+		<!--				<RadioButton text="No"/>-->
+		<!--			</RadioButtonGroup>-->
+		<!--		</form:content>-->
+		<!--	</form:SimpleForm>-->
+		<!--</Panel>-->
+		<!--<Panel visible="{=${selectedDashboard>/SelectedKey}==='Partner Group' &amp;&amp; ${selectedDashboard>/chart}===false}">-->
+		<!--	<t:Table id="tableFormPG" selectionMode="None" rows="{TATA_Part_Grp>/dataModel}" visibleRowCount="10" enableCellFilter="true" width="23rem"-->
+		<!--		ariaLabelledBy="title" class="masterconfigTable7">-->
+		<!--		<t:extension>-->
+		<!--			<OverflowToolbar>-->
+		<!--				<ToolbarSpacer/>-->
+		<!--				<Link text="Back" press="onButtonForm" class="sapUiSmallMarginTop sapUiTinyMarginEnd"/>-->
+		<!--				<ImageContent src="sap-icon://sorting-ranking" tooltip="clear sorting" press="clearSorting" class="sapUiSmallMarginBottom uitableIC"/>-->
+		<!--				<ImageContent src="sap-icon://clear-filter" tooltip="clear filter" press="clearFilters" class="sapUiSmallMarginBottom uitableIC"/>-->
+		<!--			</OverflowToolbar>-->
+		<!--		</t:extension>-->
+		<!--		<t:columns>-->
+		<!--			<t:Column width="11rem" filterProperty="PartGroName" sortProperty="PartGroName" hAlign="Center">-->
+		<!--				<Label text="Partner Group" wrapping="true" class="TableLabel" textAlign="Center"/>-->
+		<!--				<t:template>-->
+		<!--					<Text text="{TATA_Part_Grp>PartGroName}" wrapping="true" class="TableLabel" textAlign="Center"/>-->
+		<!--				</t:template>-->
+		<!--			</t:Column>-->
+		<!--			<t:Column width="6rem" sortProperty="Locked" hAlign="Center">-->
+		<!--				<Label text="Active" wrapping="true" class="TableLabel" textAlign="Center"/>-->
+		<!--				<t:template>-->
+		<!--					<Switch state="{=${TATA_Part_Grp>Locked}==='N'?true:false}" customTextOn=" " customTextOff=" " class="switchClass" enabled="false"/>-->
+		<!--				</t:template>-->
+		<!--			</t:Column>-->
+		<!--			<t:Column width="4rem" hAlign="Center">-->
+		<!--				<Label text="Edit" wrapping="true" class="TableLabel" textAlign="Center"/>-->
+		<!--				<t:template>-->
+		<!--					<Image src="{imageModel>/path}/images/pencil.png" height="23px" decorative="false" press="onPencilPress"/>-->
+		<!--				</t:template>-->
+		<!--			</t:Column>-->
+		<!--		</t:columns>-->
+		<!--	</t:Table>-->
+		<!--</Panel>-->
+		<Panel visible="{=${selectedDashboard>/SelectedKey}==='Partner' &amp;&amp; ${selectedDashboard>/chart}===true &amp;&amp; ${data>/Item/3/nodes/6/Access}==='F'}" class="formPanelMCnfg">
+			<form:SimpleForm id="TATAPartners" layout="ResponsiveGridLayout" editable="false" class="sapUiSizeCompact FormTitle Mastrcnfgfrm"
+				labelSpanXL="3" labelSpanL="3" labelSpanM="3" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="4" emptySpanL="4" emptySpanM="4"
+				emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false"
+				binding="{SetupScreenModel>/SetUpTataPartnersArrData/0/}">
+				<form:toolbar>
+					<Toolbar class="formToolBarMCfg">
+						<Title text="{selectedDashboard>/SelectedKey}"/>
+						<ToolbarSpacer/>
+						<Link press="onButtonTabel" text="Details"/>
+					</Toolbar>
+				</form:toolbar>
+				<form:content>
+					<core:Title/>
+					<Label text="Partner Name" class="sapUiTinyMarginTop"/>
+					<Input type="Text" value="{SetupScreenModel>PartnersName}" change="onChange" id="pfield1" fieldGroupIds="myInputs" class="formfield"/>
+					<!--<Label text="Partner Group" class="sapUiTinyMarginTop"/>-->
+					<!--<ComboBox-->
+					<!--	items="{path:'TATA_Part_Grp>/dataModel',length:10000,filters: [{ path: 'Locked', operator: 'EQ', value1: 'N' }], sorter: { path: 'PartGroName' }}"-->
+					<!--	selectedKey="{SetupScreenModel>PartGroID}" change="onChange" id="pfield2" fieldGroupIds="myInputs" class="formfield">-->
+					<!--	<items>-->
+					<!--		<core:Item key="{TATA_Part_Grp>PartGroID}" text="{TATA_Part_Grp>PartGroName}"/>-->
+					<!--	</items>-->
+					<!--</ComboBox>-->
+					<Label text="Partner Type" class="sapUiTinyMarginTop"/>
+					<ComboBox selectedKey="{SetupScreenModel>PType}" change="onChange" id="pfield3" fieldGroupIds="myInputs" class="formfield">
+						<items>
+							<core:Item key="Customer" text="Customer"/>
+							<core:Item key="Partner" text="Partner"/>
+							<core:Item key="Bidder" text="Bidder"/>
+						</items>
+					</ComboBox>
+					<Label text="Active" class="sapUiTinyMarginTop"/>
+					<RadioButtonGroup columns="2" selectedIndex="{SetupScreenModel>Locked}">
+						<RadioButton text="Yes"/>
+						<RadioButton text="No"/>
+					</RadioButtonGroup>
+				</form:content>
+			</form:SimpleForm>
+		</Panel>
+		<Panel visible="{=${selectedDashboard>/SelectedKey}==='Partner' &amp;&amp; ${selectedDashboard>/chart}===false &amp;&amp; ${data>/Item/3/nodes/6/Access}==='F'}">
+			<t:Table id="tableFormPT" selectionMode="None" rows="{TATA_Partners>/dataModel}" visibleRowCount="10" enableCellFilter="true"
+				ariaLabelledBy="title" class="masterconfigTable8" width="34rem">
+				<t:extension>
+					<OverflowToolbar>
+						<ToolbarSpacer/>
+						<Link text="Back" press="onButtonForm" class="sapUiSmallMarginTop sapUiTinyMarginEnd"/>
+						<ImageContent src="sap-icon://sorting-ranking" tooltip="clear sorting" press="clearSorting" class="sapUiSmallMarginBottom uitableIC"/>
+						<ImageContent src="sap-icon://clear-filter" tooltip="clear filter" press="clearFilters" class="sapUiSmallMarginBottom uitableIC"/>
+					</OverflowToolbar>
+				</t:extension>
+				<t:columns>
+					<t:Column width="11rem" filterProperty="PartnersName" sortProperty="PartnersName" hAlign="Center">
+						<Label text="Partner" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{TATA_Partners>PartnersName}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="11rem" filterProperty="PType" sortProperty="PType" hAlign="Center">
+						<Label text="Partner Type" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{TATA_Partners>PType}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="6rem" filterProperty="Locked" sortProperty="Locked" hAlign="Center">
+						<Label text="Active" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Switch state="{=${TATA_Partners>Locked}==='N'?true:false}" customTextOn=" " customTextOff=" " class="switchClass" enabled="false"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="4rem" hAlign="Center">
+						<Label text="Edit" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Image src="{imageModel>/path}/images/pencil.png" height="23px" decorative="false" press="onPencilPress"/>
+						</t:template>
+					</t:Column>
+				</t:columns>
+			</t:Table>
+		</Panel>
+		<Panel visible="{=${selectedDashboard>/SelectedKey}==='Competitor' &amp;&amp; ${selectedDashboard>/chart}===true &amp;&amp; ${data>/Item/3/nodes/7/Access}==='F'}" class="formPanelMCnfg">
+			<form:SimpleForm id="TATA_Competitors" layout="ResponsiveGridLayout" editable="false" class="sapUiSizeCompact FormTitle Mastrcnfgfrm"
+				labelSpanXL="3" labelSpanL="3" labelSpanM="3" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="4" emptySpanL="4" emptySpanM="4"
+				emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false" binding="{SetupScreenModel>/SetUpCompetitorsData/0/}">
+				<form:toolbar>
+					<Toolbar class="formToolBarMCfg">
+						<Title text="{selectedDashboard>/SelectedKey}"/>
+						<ToolbarSpacer/>
+						<Link press="onButtonTabel" text="Details"/>
+					</Toolbar>
+				</form:toolbar>
+				<form:content>
+					<core:Title/>
+					<Label text="Competitor Name" class="sapUiTinyMarginTop"/>
+					<Input type="Text" value="{SetupScreenModel>CompetName}" change="onChange" id="cpfield1" fieldGroupIds="myInputs" class="formfield"/>
+					<Label text="Active" class="sapUiTinyMarginTop"/>
+					<RadioButtonGroup columns="2" selectedIndex="{SetupScreenModel>Locked}">
+						<RadioButton text="Yes"/>
+						<RadioButton text="No"/>
+					</RadioButtonGroup>
+				</form:content>
+			</form:SimpleForm>
+		</Panel>
+		<Panel visible="{=${selectedDashboard>/SelectedKey}==='Competitor' &amp;&amp; ${selectedDashboard>/chart}===false &amp;&amp; ${data>/Item/3/nodes/7/Access}==='F'}">
+			<t:Table id="tableFormCP" selectionMode="None" rows="{TATA_Competitors>/dataModel}" visibleRowCount="10" enableCellFilter="true"
+				ariaLabelledBy="title" class="masterconfigTable8" width="23rem">
+				<t:extension>
+					<OverflowToolbar>
+						<ToolbarSpacer/>
+						<Link text="Back" press="onButtonForm" class="sapUiSmallMarginTop sapUiTinyMarginEnd"/>
+						<ImageContent src="sap-icon://sorting-ranking" tooltip="clear sorting" press="clearSorting" class="sapUiSmallMarginBottom uitableIC"/>
+						<ImageContent src="sap-icon://clear-filter" tooltip="clear filter" press="clearFilters" class="sapUiSmallMarginBottom uitableIC"/>
+					</OverflowToolbar>
+				</t:extension>
+				<t:columns>
+					<t:Column width="11rem" filterProperty="PartnersName" sortProperty="PartnersName" hAlign="Center">
+						<Label text="Name" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{TATA_Competitors>CompetName}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="6rem" filterProperty="Locked" sortProperty="Locked" hAlign="Center">
+						<Label text="Active" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Switch state="{=${TATA_Competitors>Locked}==='N'?true:false}" customTextOn=" " customTextOff=" " class="switchClass" enabled="false"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="4rem" hAlign="Center">
+						<Label text="Edit" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Image src="{imageModel>/path}/images/pencil.png" height="23px" decorative="false" press="onPencilPress"/>
+						</t:template>
+					</t:Column>
+				</t:columns>
+			</t:Table>
+		</Panel>
+		<Panel visible="{=${selectedDashboard>/SelectedKey}==='Tech Bid Manager' &amp;&amp; ${selectedDashboard>/chart}===true &amp;&amp; ${data>/Item/3/nodes/8/Access}==='F'}"
+			class="formPanelMCnfg">
+			<form:SimpleForm id="TATATechMngr" layout="ResponsiveGridLayout" editable="false" class="sapUiSizeCompact FormTitle Mastrcnfgfrm"
+				labelSpanXL="3" labelSpanL="3" labelSpanM="3" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="4" emptySpanL="4" emptySpanM="4"
+				emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false"
+				binding="{SetupScreenModel>/SetUpTataTeamMngrData/0/}">
+				<form:toolbar>
+					<Toolbar class="formToolBarMCfg">
+						<Title text="{selectedDashboard>/SelectedKey}"/>
+						<ToolbarSpacer/>
+						<Link press="onButtonTabel" text="Details"/>
+					</Toolbar>
+				</form:toolbar>
+				<form:content>
+					<core:Title/>
+					<Label text="Name" class="sapUiTinyMarginTop"/>
+					<Input type="Text" value="{SetupScreenModel>BidTechMgr}" change="onChange" id="tmfield1" fieldGroupIds="myInputs" class="formfield"/>
+					<Label text="Active" class="sapUiTinyMarginTop"/>
+					<RadioButtonGroup columns="2" selectedIndex="{SetupScreenModel>Locked}">
+						<RadioButton text="Yes"/>
+						<RadioButton text="No"/>
+					</RadioButtonGroup>
+				</form:content>
+			</form:SimpleForm>
+		</Panel>
+		<Panel visible="{=${selectedDashboard>/SelectedKey}==='Tech Bid Manager' &amp;&amp; ${selectedDashboard>/chart}===false &amp;&amp; ${data>/Item/3/nodes/8/Access}==='F'}">
+			<t:Table id="tableFormTM" selectionMode="None" rows="{TATA_TechMgr>/dataModel}" visibleRowCount="10" enableCellFilter="true"
+				ariaLabelledBy="title" class="masterconfigTable8" width="23rem">
+				<t:extension>
+					<OverflowToolbar>
+						<ToolbarSpacer/>
+						<Link text="Back" press="onButtonForm" class="sapUiSmallMarginTop sapUiTinyMarginEnd"/>
+						<ImageContent src="sap-icon://sorting-ranking" tooltip="clear sorting" press="clearSorting" class="sapUiSmallMarginBottom uitableIC"/>
+						<ImageContent src="sap-icon://clear-filter" tooltip="clear filter" press="clearFilters" class="sapUiSmallMarginBottom uitableIC"/>
+					</OverflowToolbar>
+				</t:extension>
+				<t:columns>
+					<t:Column width="11rem" filterProperty="BidTechMgr" sortProperty="BidTechMgr" hAlign="Center">
+						<Label text="Name" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{TATA_TechMgr>BidTechMgr}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="6rem" filterProperty="Locked" sortProperty="Locked" hAlign="Center">
+						<Label text="Active" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Switch state="{=${TATA_TechMgr>Locked}==='N'?true:false}" customTextOn=" " customTextOff=" " class="switchClass" enabled="false"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="4rem" hAlign="Center">
+						<Label text="Edit" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Image src="{imageModel>/path}/images/pencil.png" height="23px" decorative="false" press="onPencilPress"/>
+						</t:template>
+					</t:Column>
+				</t:columns>
+			</t:Table>
+		</Panel>
+		<Panel visible="{=${selectedDashboard>/SelectedKey}==='Stage of Deal' &amp;&amp; ${selectedDashboard>/chart}===true &amp;&amp; ${data>/Item/3/nodes/9/Access}==='F'}" class="formPanelMCnfg">
+			<form:SimpleForm id="TATAMOD" layout="ResponsiveGridLayout" editable="false" class="sapUiSizeCompact FormTitle Mastrcnfgfrm" labelSpanXL="3"
+				labelSpanL="3" labelSpanM="3" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="4" emptySpanL="4" emptySpanM="4" emptySpanS="0"
+				columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false" binding="{SetupScreenModel>/SetUpTataModData/0/}">
+				<form:toolbar>
+					<Toolbar class="formToolBarMCfg">
+						<Title text="{selectedDashboard>/SelectedKey}"/>
+						<ToolbarSpacer/>
+						<Link press="onButtonTabel" text="Details"/>
+					</Toolbar>
+				</form:toolbar>
+				<form:content>
+					<core:Title/>
+					<Label text="Customer Segment" class="sapUiTinyMarginTop"/>
+					<ComboBox
+						items="{path:'TATA_CUSTSEG>/dataModel',length:10000,filters: [{ path: 'Locked', operator: 'EQ', value1: 'N' }], sorter: { path: 'CUSTSEGNAME' }}"
+						selectedKey="{SetupScreenModel>SegID}" change="onChange" id="modfield1" fieldGroupIds="myInputs" class="formfield">
+						<items>
+							<core:Item key="{TATA_CUSTSEG>CUSTSEGID}" text="{TATA_CUSTSEG>CUSTSEGNAME}"/>
+						</items>
+					</ComboBox>
+					<Label text="Name" class="sapUiTinyMarginTop"/>
+					<Input type="Text" value="{SetupScreenModel>ModNAME}" change="onChange" id="modfield2" fieldGroupIds="myInputs" class="formfield"/>
+					<Label text="Percentage" class="sapUiTinyMarginTop"/>
+					<Input type="Text" value="{SetupScreenModel>ModPER}" liveChange="validateNumber" change="onChange" id="modfield3" fieldGroupIds="myInputs"
+						class="formfield"/>
+					<Label text="Active" class="sapUiTinyMarginTop"/>
+					<RadioButtonGroup columns="2" selectedIndex="{SetupScreenModel>Locked}">
+						<RadioButton text="Yes"/>
+						<RadioButton text="No"/>
+					</RadioButtonGroup>
+				</form:content>
+			</form:SimpleForm>
+		</Panel>
+		<Panel visible="{=${selectedDashboard>/SelectedKey}==='Stage of Deal' &amp;&amp; ${selectedDashboard>/chart}===false &amp;&amp; ${data>/Item/3/nodes/9/Access}==='F'}">
+			<t:Table id="tableFormMOD" selectionMode="None" rows="{TATA_MoD>/dataModel}" visibleRowCount="10" enableCellFilter="true"
+				ariaLabelledBy="title" class="masterconfigTable8" width="29rem">
+				<t:extension>
+					<OverflowToolbar>
+						<ToolbarSpacer/>
+						<Link text="Back" press="onButtonForm" class="sapUiSmallMarginTop sapUiTinyMarginEnd"/>
+						<ImageContent src="sap-icon://sorting-ranking" tooltip="clear sorting" press="clearSorting" class="sapUiSmallMarginBottom uitableIC"/>
+						<ImageContent src="sap-icon://clear-filter" tooltip="clear filter" press="clearFilters" class="sapUiSmallMarginBottom uitableIC"/>
+					</OverflowToolbar>
+				</t:extension>
+				<t:columns>
+					<t:Column width="11rem" filterProperty="ModNAME" sortProperty="ModNAME" hAlign="Center">
+						<Label text="Name" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{TATA_MoD>ModNAME}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="6rem" hAlign="Center">
+						<Label text="Percentage" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{TATA_MoD>ModPER}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="6rem" filterProperty="Locked" sortProperty="Locked" hAlign="Center">
+						<Label text="Active" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Switch state="{=${TATA_MoD>Locked}==='N'?true:false}" customTextOn=" " customTextOff=" " class="switchClass" enabled="false"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="4rem" hAlign="Center">
+						<Label text="Edit" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Image src="{imageModel>/path}/images/pencil.png" height="23px" decorative="false" press="onPencilPress"/>
+						</t:template>
+					</t:Column>
+				</t:columns>
+			</t:Table>
+		</Panel>
+		<Panel visible="{=${selectedDashboard>/SelectedKey}==='Upload Project' &amp;&amp; ${selectedDashboard>/chart}===true &amp;&amp; ${data>/Item/3/nodes/10/Access}==='F'}"
+			class="formPanelMCnfg">
+			<t:Table id="tableFormUE" selectionMode="None" rows="{fileModel>/fileData}" visibleRowCount="10" enableCellFilter="true"
+				ariaLabelledBy="title" class="masterconfigTable8" width="35rem">
+				<t:extension>
+					<OverflowToolbar>
+						<content>
+							<Title text="Projects" level="H2"/>
+							<ToolbarSpacer/>
+							<u:FileUploader class="sapUiTinyMarginEnd" icon="sap-icon://excel-attachment" id="fileUploader" change="onFileChange" name="myFileUpload"
+								fileType="xlsx"/>
+							<Button text="Upload" icon="sap-icon://upload" press="onUpload"/>
+						</content>
+					</OverflowToolbar>
+					<HBox justifyContent="Center">
+						<Text text="Supported file format: xlsx"/>
+					</HBox>
+				</t:extension>
+				<t:columns>
+					<t:Column width="10rem" filterProperty="PartnersName" sortProperty="PartnersName" hAlign="Center">
+						<Label text="Code" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{fileModel>Code}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="12rem" filterProperty="Locked" sortProperty="Locked" hAlign="Center">
+						<Label text="Name" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{fileModel>Name}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="13rem" hAlign="Center">
+						<Label text="Master Project" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{fileModel>Master Project}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+				</t:columns>
+			</t:Table>
+		</Panel>
+		<Panel visible="{=${selectedDashboard>/SelectedKey}==='Miscellaneous' &amp;&amp; ${selectedDashboard>/chart}===true &amp;&amp; ${data>/Item/3/nodes/11/Access}==='F'}" class="formPanelMCnfg">
+			<form:SimpleForm id="TATAMISCELL" layout="ResponsiveGridLayout" editable="false" class="sapUiSizeCompact FormTitle Mastrcnfgfrm"
+				labelSpanXL="3" labelSpanL="3" labelSpanM="3" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="4" emptySpanL="4" emptySpanM="4"
+				emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false" binding="{SetupScreenModel>/SetUpMiscellData/0/}">
+				<form:toolbar>
+					<Toolbar class="formToolBarMCfg">
+						<Title text="{selectedDashboard>/SelectedKey}"/>
+						<ToolbarSpacer/>
+						<Link press="onButtonTabel" text="Details"/>
+					</Toolbar>
+				</form:toolbar>
+				<form:content>
+					<core:Title/>
+					<Label text="Type" class="sapUiTinyMarginTop"/>
+					<ComboBox items="{path:'TATA_MISCELLANEOUS>/dataModel',length:10000}" selectedKey="{SetupScreenModel>ID}" change="onMiscellChange"
+						id="misfield1" fieldGroupIds="myInputs" class="formfield">
+						<items>
+							<core:Item key="{TATA_MISCELLANEOUS>ID}" text="{TATA_MISCELLANEOUS>MIS_Type}"/>
+						</items>
+					</ComboBox>
+					<Label text="Description" class="sapUiTinyMarginTop"/>
+					<Input value="{SetupScreenModel>MIS_Description}" id="misfield2" class="formfield" enabled="false"/>
+					<Label text="Value" class="sapUiTinyMarginTop"/>
+					<Input type="Text" value="{SetupScreenModel>MIS_Value}" id="misfield3" fieldGroupIds="myInputs" class="formfield"/>
+					<Label text="Active" class="sapUiTinyMarginTop"/>
+				</form:content>
+			</form:SimpleForm>
+		</Panel>
+		<Panel visible="{=${selectedDashboard>/SelectedKey}==='Miscellaneous' &amp;&amp; ${selectedDashboard>/chart}===false &amp;&amp; ${data>/Item/3/nodes/11/Access}==='F'}">
+			<t:Table id="tableFormMISC" selectionMode="None" rows="{TATA_MISCELLANEOUS>/dataModel}" visibleRowCount="10" enableCellFilter="true"
+				ariaLabelledBy="title" class="masterconfigTable8" width="29rem">
+				<t:extension>
+					<OverflowToolbar>
+						<ToolbarSpacer/>
+						<Link text="Back" press="onButtonForm" class="sapUiSmallMarginTop sapUiTinyMarginEnd"/>
+						<ImageContent src="sap-icon://sorting-ranking" tooltip="clear sorting" press="clearSorting" class="sapUiSmallMarginBottom uitableIC"/>
+						<ImageContent src="sap-icon://clear-filter" tooltip="clear filter" press="clearFilters" class="sapUiSmallMarginBottom uitableIC"/>
+					</OverflowToolbar>
+				</t:extension>
+				<t:columns>
+					<t:Column width="11rem" filterProperty="ModNAME" sortProperty="ModNAME" hAlign="Center">
+						<Label text="Type" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{TATA_MISCELLANEOUS>MIS_Type}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="6rem" hAlign="Center">
+						<Label text="Description" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{TATA_MISCELLANEOUS>MIS_Description}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="6rem" hAlign="Center">
+						<Label text="Value" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{TATA_MISCELLANEOUS>MIS_Value}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="4rem" hAlign="Center">
+						<Label text="Edit" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Image src="{imageModel>/path}/images/pencil.png" height="23px" decorative="false" press="onPencilPress"/>
+						</t:template>
+					</t:Column>
+				</t:columns>
+			</t:Table>
+		</Panel>
+		<Panel
+			visible="{=${selectedDashboard>/SelectedKey}==='Authorization' &amp;&amp; ${selectedDashboard>/chart}===true &amp;&amp; ${data>/Item/3/nodes/12/Access}==='F'}"
+			class="formPanelMCnfg">
+			<form:SimpleForm id="TATAAUTH" layout="ResponsiveGridLayout" editable="false" class="sapUiSizeCompact FormTitle Mastrcnfgfrm"
+				labelSpanXL="3" labelSpanL="3" labelSpanM="3" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="4" emptySpanL="4" emptySpanM="4"
+				emptySpanS="0" columnsXL="1" columnsL="1" columnsM="1" singleContainerFullSize="false">
+				<!--<form:toolbar>
+					<Toolbar class="formToolBarMCfg">
+						<Title text="{selectedDashboard>/SelectedKey}"/>
+						<ToolbarSpacer/>
+						<Link press="onButtonTabel" text="Details"/>
+					</Toolbar>
+				</form:toolbar>-->
+				<form:content>
+					<core:Title/>
+					<Label text="Type" class="sapUiTinyMarginTop"/>
+					<Select selectedKey="{SetupScreenModel>/SetUpAuthData/0/key}" change="onAuthTypeChange" id="authfield1" class="formfield">
+						<items>
+							<core:Item key="U" text="User"/>
+							<core:Item key="G" text="User Group"/>
+						</items>
+					</Select>
+					<Label text="User Groups" class="sapUiTinyMarginTop" visible="{=${SetupScreenModel>/SetUpAuthData/0/key}==='G'}"/>
+					<ComboBox items="{path:'TATA_USER_GRP>/dataModel',length:10000}" id="authfield2" fieldGroupIds="myInputs" class="formfield"
+						visible="{=${SetupScreenModel>/SetUpAuthData/0/key}==='G'}" change="onAuthTypeSelection">
+						<items>
+							<core:Item key="{TATA_USER_GRP>GROUPID}" text="{TATA_USER_GRP>GROUPNAME}"/>
+						</items>
+					</ComboBox>
+					<Label text="Users" class="sapUiTinyMarginTop" visible="{=${SetupScreenModel>/SetUpAuthData/0/key}==='U'}"/>
+					<ComboBox items="{path:'TATA_USER>/dataModel',length:10000}" visible="{=${SetupScreenModel>/SetUpAuthData/0/key}==='U'}" id="authfield3"
+						fieldGroupIds="myInputs" class="formfield" change="onAuthTypeSelection">
+						<items>
+							<core:Item key="{TATA_USER>USERID}" text="{TATA_USER>U_NAME} - {TATA_USER>USER_CODE}"/>
+						</items>
+					</ComboBox>
+					<!--<Label text="Value" class="sapUiTinyMarginTop"/>
+					<Input type="Text" value="{SetupScreenModel>MIS_Value}" id="authfield4" fieldGroupIds="myInputs" class="formfield"/>-->
+					<Label text="Active" class="sapUiTinyMarginTop"/>
+				</form:content>
+			</form:SimpleForm>
+			<t:TreeTable id="tableFormAuth" selectionMode="None" rows="{path:'AuthTable>/dataModel', parameters: {arrayNames:['TATA_FORM_ROW']}}"
+				visibleRowCount="10" ariaLabelledBy="title" class="masterconfigTable8" width="42rem">
+				<!--rows="{path:'AuthTable>/dataModel', parameters: {countMode: 'Inline',arrayNames:['TATA_FORM_ROW']}}" visibleRowCount="10"-->
+				<t:columns>
+					<t:Column width="15rem" hAlign="Center">
+						<Label text="Segment" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{AuthTable>Form_Name}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="15rem" hAlign="Center">
+						<Label text="Description" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Text text="{AuthTable>Form_Description}" wrapping="true" class="TableLabel" textAlign="Center"/>
+						</t:template>
+					</t:Column>
+					<t:Column width="10rem" hAlign="Center">
+						<Label text="Access" wrapping="true" class="TableLabel" textAlign="Center"/>
+						<t:template>
+							<Select selectedKey="{AuthTable>Access}" items="{path:'SetupScreenModel>/AccessData',templateShareable:false}"
+								visible="{=!!${AuthTable>Access}}">
+								<core:Item key="{SetupScreenModel>key}" text="{SetupScreenModel>value}"/>
+							</Select>
+							<!--<Switch state="{=${AuthTable>Access} === 'F'?true:false}" visible="{=!!${AuthTable>Access}}" customTextOn=" " customTextOff=" "
+								class="switchClass" change="onAuthoSwitch"/>-->
+						</t:template>
+					</t:Column>
+				</t:columns>
+			</t:TreeTable>
+		</Panel>
+	</Panel>
+</core:FragmentDefinition>
